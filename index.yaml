@@ -1,0 +1,17 @@
+apiVersion: v1
+entries:
+  memos:
+  - apiVersion: v2
+    created: "2024-12-11T09:41:26.541494238Z"
+    description: A Helm chart for Memos
+    digest: 5cf9203c8742f1d87cbf001545f520d93697b2f7b737733341f07c2960ea4642
+    keywords:
+    - memos
+    - notes
+    - note-taking
+    name: memos
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-12-11T09:41:26.541502704Z"
