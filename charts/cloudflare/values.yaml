@@ -1,0 +1,86 @@
+# Default values for cloudflare chart
+name: cloudflared
+namespace: default
+
+# Number of replicas
+replicaCount: 2
+
+# Pod-related labels and annotations
+labels: {}
+podLabels: {}
+podAnnotations: {}
+
+# Image configuration
+image:
+  repository: cloudflare/cloudflared
+  tag: "2024.12.1"
+  pullPolicy: IfNotPresent
+
+imagePullSecrets: []
+
+# Arguments passed to the container
+args:
+  - tunnel
+  - --config
+  - /etc/cloudflared/config/config.yaml
+  - run
+
+# Resource configuration
+resources: {}
+# limits:
+#   cpu: 100m
+#   memory: 128Mi
+# requests:
+#   cpu: 100m
+#   memory: 128Mi
+
+# Liveness probe configuration
+livenessProbe:
+  httpGet:
+    path: /ready
+    port: 2000
+  failureThreshold: 1
+  initialDelaySeconds: 10
+  periodSeconds: 10
+
+# Volume mounts configuration
+volumeMounts:
+  - name: config
+    mountPath: /etc/cloudflared/config
+    readOnly: true
+  - name: creds
+    mountPath: /etc/cloudflared/creds
+    readOnly: true
+  - name: cert
+    mountPath: /etc/cloudflared
+    readOnly: true
+
+# Volumes configuration
+volumes:
+  - name: creds
+    secret:
+      secretName: tunnel-credentials
+  - name: config
+    configMap:
+      name: cloudflared
+      items:
+        - key: config.yaml
+          path: config.yaml
+  - name: cert
+    secret:
+      secretName: cloudflared-cert
+
+# Node selector configuration
+nodeSelector: {}
+
+# Affinity configuration
+affinity: {}
+
+# Tolerations configuration
+tolerations: []
+
+# Tunnel credentials (base64 encoded content of credentials.json)
+tunnelCredentials: ""
+
+# Certificate PEM (base64 encoded content of cert.pem)
+certPem: ""
