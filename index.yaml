@@ -1,5 +1,21 @@
 apiVersion: v1
 entries:
+  cloudflared:
+  - apiVersion: v2
+    created: "2024-12-12T08:11:44.21160227Z"
+    description: A Helm chart for cloudflared
+    digest: 88a316ecb19c20d3caa7dd7a5340d26b5a19a2e2845772f2d4272f1992a61cbe
+    keywords:
+    - cloudflared
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: cloudflared
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
+    version: 0.1.0
   memos:
   - apiVersion: v2
     created: "2024-12-11T09:41:26.541494238Z"
@@ -14,4 +30,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-11T09:41:26.541502704Z"
+generated: "2024-12-12T08:11:44.317245032Z"
