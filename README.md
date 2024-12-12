@@ -1,6 +1,6 @@
-# chart
+# Chart
 
-self-hosted helm chart
+Self-hosted helm chart
 
 ## Prerequisites
 
@@ -15,7 +15,10 @@ helm repo add le https://loneexile.github.io/chart
 helm repo update
 
 ## example installation
-helm install memos loneexile/memos
+helm install memos le/memos
+
+## example installation with custom values
+helm install memos le/memos -f custom-values.yaml
 
 ## remove installation
 helm uninstall memos
@@ -28,6 +31,13 @@ helm repo remove le
 
 - [memos](https://github.com/usememos/memos)
   An open-source, lightweight note-taking solution. The pain-less way to create your meaningful notes. Your Notes, Your Way.
+
+## TODO
+
+- [ ] add more charts
+- [ ] handle secrets
+  - [external-secrets](https://github.com/external-secrets/external-secrets)
+  - [helm-secrets](https://github.com/jkroepke/helm-secrets)
 
 #### resources
 

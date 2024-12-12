@@ -1,0 +1,7 @@
+## Use the following values to configure the Cloudflare Tunnel
+
+# Tunnel credentials (base64 encoded content of credentials.json)
+tunnelCredentials:
+
+# Certificate PEM (base64 encoded content of cert.pem)
+certPem:

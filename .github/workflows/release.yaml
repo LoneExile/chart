@@ -21,6 +21,30 @@ jobs:
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
 
+      - name: Install yq
+        run: |
+          wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /usr/local/bin/yq
+          chmod +x /usr/local/bin/yq
+
+      - name: Add maintainers to Chart.yaml
+        run: |
+          set -e
+          for chart in charts/*; do
+            if [ -f "$chart/Chart.yaml" ]; then
+              echo "Processing $chart/Chart.yaml"
+              yq eval '.maintainers' .cr.yaml > maintainers.tmp
+              if [ -s maintainers.tmp ]; then
+                yq eval-all 'select(fileIndex == 0) *+ {"maintainers": (select(fileIndex == 1) | .)}' \
+                  "$chart/Chart.yaml" maintainers.tmp > "$chart/Chart.yaml.new"
+                mv "$chart/Chart.yaml.new" "$chart/Chart.yaml"
+                echo "Successfully updated maintainers in $chart/Chart.yaml"
+              else
+                echo "Warning: No maintainers found in .cr.yaml"
+              fi
+              rm maintainers.tmp
+            fi
+          done
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.5.0
         with:
