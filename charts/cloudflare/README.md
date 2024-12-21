@@ -29,7 +29,7 @@ cat /home/<USER_NAME>/.cloudflared/cert.pem | base64 -w 0
 3. Install the Helm chart:
 
 ```bash
-helm install cloudflared le/cloudflared -f custom_values.yaml
+helm install cloudflared le/cloudflared -f custom_values.yaml --namespace cloudflared --create-namespace
 ```
 
 ## Configuration
