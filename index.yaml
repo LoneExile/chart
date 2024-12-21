@@ -16,6 +16,21 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
+  filebrowser:
+  - apiVersion: v2
+    appVersion: s6
+    created: "2024-12-21T18:12:03.238993385Z"
+    description: A Helm chart for FileBrowser
+    digest: 0ad9d77a9d9d6bd5970e8fc52c93f035ad4cb14bc1dd007c573f3c582261f6a3
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: filebrowser
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/filebrowser-0.1.0/filebrowser-0.1.0.tgz
+    version: 0.1.0
   memos:
   - apiVersion: v2
     created: "2024-12-11T09:41:26.541494238Z"
@@ -30,4 +45,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-12T08:11:44.317245032Z"
+generated: "2024-12-21T18:12:03.322091165Z"
