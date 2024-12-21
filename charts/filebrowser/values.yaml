@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: filebrowser/filebrowser
+  tag: s6
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+securityContext:
+  runAsUser: 0
+  runAsGroup: 0
+
+env:
+  PGID: "0"
+  PUID: "0"
+
+persistence:
+  claimName: nfs-client-1
+  mountPaths:
+    - path: /database
+      subPath: config/filebrowser/database
+    - path: /srv
+      subPath: ""
+
+labels:
+  app: filebrowser
