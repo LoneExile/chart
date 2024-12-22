@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "aria-chart.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: {{ .Release.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+              name: aria-1
+              protocol: TCP
+            - containerPort: {{ .Values.service.port }}
+              name: aria-2
+              protocol: TCP
+          volumeMounts:
+            {{- range .Values.volumeMounts }}
+            - mountPath: {{ .mountPath }}
+              name: aria-volume
+              subPath: {{ .subPath }}
+            {{- end }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+      volumes:
+        - name: aria-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumeClaim.name }}

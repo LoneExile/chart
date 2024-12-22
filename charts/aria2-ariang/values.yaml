@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: hurlenko/aria2-ariang
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 443
+  targetPort: 8080
+
+volumeClaim:
+  name: nfs-client-1
+
+env:
+  ARIA2RPCPORT: "443"
+  RPC_SECRET: ""
+  BASIC_AUTH_USERNAME: ""
+  BASIC_AUTH_PASSWORD: ""
+
+volumeMounts:
+  - mountPath: /aria2/data
+    subPath: home/download
+  - mountPath: /aria2/conf
+    subPath: config/ariang

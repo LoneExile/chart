@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-service
+  labels:
+    app: {{ .Release.Name }}
+    {{- include "aria-chart.labels" . | nindent 4 }}
+spec:
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - name: aria-1
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
