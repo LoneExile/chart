@@ -1,0 +1,64 @@
+nameOverride: ""
+fullnameOverride: ""
+image:
+  repository: linuxserver/jellyfin
+  tag: "2024121605"
+  pullPolicy: IfNotPresent
+
+service:
+  port: 8096
+  targetPort: 8096
+
+deployment:
+  replicas: 1
+
+volumeMounts:
+  config:
+    path: "/config"
+    subPath: "config/jelly/config"
+  cache:
+    path: "/cache"
+    subPath: "config/jelly/cache"
+  media:
+    path: "/media"
+    subPath: "config/jelly/media"
+  series:
+    path: "/series"
+    subPath: "home/series"
+  movie:
+    path: "/movie"
+    subPath: "home/movie"
+  devices:
+    - path: /dev/dri
+      name: device-dri
+    - path: /dev/dma_heap
+      name: device-dma-heap
+    - path: /dev/rga
+      name: device-rga
+    - path: /dev/mpp_service
+      name: device-mpp-service
+
+volumes:
+  nfs:
+    name: jelly-volume-nfs
+    persistentVolumeClaim:
+      claimName: nfs-client-1
+  devices:
+    - name: device-dri
+      hostPath:
+        path: /dev/dri
+    - name: device-dma-heap
+      hostPath:
+        path: /dev/dma_heap
+    - name: device-rga
+      hostPath:
+        path: /dev/rga
+    - name: device-mpp-service
+      hostPath:
+        path: /dev/mpp_service
+
+securityContext:
+  privileged: true
+
+# nodeSelector:
+#   kubernetes.io/hostname: worker-1

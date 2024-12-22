@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jellyfin.fullname" . }}
+  labels:
+    {{- include "jellyfin.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      {{- include "jellyfin.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "jellyfin.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ include "jellyfin.name" . }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.port }}
+          volumeMounts:
+            - name: {{ .Values.volumes.nfs.name }}
+              mountPath: {{ .Values.volumeMounts.config.path }}
+              subPath: {{ .Values.volumeMounts.config.subPath }}
+            - name: {{ .Values.volumes.nfs.name }}
+              mountPath: {{ .Values.volumeMounts.cache.path }}
+              subPath: {{ .Values.volumeMounts.cache.subPath }}
+            - name: {{ .Values.volumes.nfs.name }}
+              mountPath: {{ .Values.volumeMounts.media.path }}
+              subPath: {{ .Values.volumeMounts.media.subPath }}
+            - name: {{ .Values.volumes.nfs.name }}
+              mountPath: {{ .Values.volumeMounts.series.path }}
+              subPath: {{ .Values.volumeMounts.series.subPath }}
+            - name: {{ .Values.volumes.nfs.name }}
+              mountPath: {{ .Values.volumeMounts.movie.path }}
+              subPath: {{ .Values.volumeMounts.movie.subPath }}
+            {{- range .Values.volumeMounts.devices }}
+            - name: {{ .name }}
+              mountPath: {{ .path }}
+            {{- end }}
+          securityContext:
+            privileged: {{ .Values.securityContext.privileged }}
+      {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
+      volumes:
+        - name: {{ .Values.volumes.nfs.name }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.volumes.nfs.persistentVolumeClaim.claimName }}
+        {{- range .Values.volumes.devices }}
+        - name: {{ .name }}
+          hostPath:
+            path: {{ .hostPath.path }}
+        {{- end }}

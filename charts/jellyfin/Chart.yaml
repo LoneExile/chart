@@ -1,0 +1,5 @@
+apiVersion: v2
+name: jellyfin
+description: A Helm chart for Jellyfin
+version: 0.1.0
+appVersion: "2024121605"
