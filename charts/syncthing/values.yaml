@@ -1,0 +1,50 @@
+replicaCount: 1
+
+image:
+  repository: linuxserver/syncthing
+  tag: arm64v8-latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+resources:
+  limits:
+    cpu: 500m
+    memory: 256Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
+
+persistence:
+  claimName: nfs-client-1
+  volumeMounts:
+    - name: syncthing-storage
+      mountPath: "/config"
+      subPath: "config/syncthing/config"
+    - name: syncthing-storage
+      mountPath: "/data1"
+      subPath: "home/syncthing/data1"
+    - name: syncthing-storage
+      mountPath: "/data2"
+      subPath: "home/syncthing/data2"
+
+env:
+  PGID: "1000"
+  PUID: "1000"
+
+service:
+  type: ClusterIP
+  ports:
+    http:
+      port: 32080
+      targetPort: 8384
+      protocol: TCP
+    listen:
+      port: 32000
+      targetPort: 22000
+      protocol: TCP
+    discover:
+      port: 32000
+      targetPort: 22000
+      protocol: UDP

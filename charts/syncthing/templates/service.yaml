@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "syncthing.fullname" . }}-service
+  labels:
+    {{- include "syncthing.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - name: http
+      port: {{ .Values.service.ports.http.port }}
+      targetPort: {{ .Values.service.ports.http.targetPort }}
+      protocol: {{ .Values.service.ports.http.protocol }}
+    - name: to-listen
+      port: {{ .Values.service.ports.listen.port }}
+      targetPort: {{ .Values.service.ports.listen.targetPort }}
+      protocol: {{ .Values.service.ports.listen.protocol }}
+    - name: to-discover
+      port: {{ .Values.service.ports.discover.port }}
+      targetPort: {{ .Values.service.ports.discover.targetPort }}
+      protocol: {{ .Values.service.ports.discover.protocol }}
+  selector:
+    {{- include "syncthing.selectorLabels" . | nindent 4 }}
