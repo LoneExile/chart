@@ -1,0 +1,27 @@
+replicaCount: 1
+
+image:
+  repository: loneexile/listmonk-handle
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+nodeAffinity:
+  enabled: false
+  # nodes:
+  #   - worker-1
+  #   - worker-2
+
+secrets:
+  ALLOWED_ORIGINS: ""
+  LISTMONK_API: ""
+  LISTMONK_PASS: ""
+  LISTMONK_USER: ""
+  TURNSTILE_SECRET: ""
+
+labels:
+  app: listmonk-handle

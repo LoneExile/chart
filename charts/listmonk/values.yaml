@@ -1,7 +1,7 @@
 listmonk:
   image:
     repository: listmonk/listmonk
-    tag: 4.1.0
+    tag: v4.1.0
     pullPolicy: IfNotPresent
   
   config:
