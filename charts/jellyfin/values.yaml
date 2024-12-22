@@ -2,7 +2,7 @@ nameOverride: ""
 fullnameOverride: ""
 image:
   repository: linuxserver/jellyfin
-  tag: "2024121605"
+  tag: "10.10.3"
   pullPolicy: IfNotPresent
 
 service:
