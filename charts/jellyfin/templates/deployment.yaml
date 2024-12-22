@@ -43,6 +43,11 @@ spec:
             - name: {{ .name }}
               mountPath: {{ .path }}
             {{- end }}
+          env:
+            {{- range $key, $value := .Values.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
           securityContext:
             privileged: {{ .Values.securityContext.privileged }}
       {{- if .Values.nodeSelector }}

@@ -57,10 +57,14 @@ volumes:
       hostPath:
         path: /dev/mpp_service
 
+env:
+  PGID: "1000"
+  PUID: "1000"
+
 securityContext:
   privileged: true
-  runAsUser: 0
-  runAsGroup: 0
+  runAsUser: 1000
+  runAsGroup: 1000
 
 # nodeSelector:
 #   kubernetes.io/hostname: worker-1
