@@ -231,6 +231,20 @@ entries:
   trilium:
   - apiVersion: v2
     appVersion: 0.63.7
+    created: "2024-12-22T06:51:06.154080858Z"
+    description: A Helm chart for Trilium Notes
+    digest: 392af8adadb3e469365d6c6fc47eb60db9942c55af32d2b64c1577ef0516ad30
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: trilium
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/trilium-0.1.2/trilium-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 0.63.7
     created: "2024-12-22T06:42:50.577763879Z"
     description: A Helm chart for Trilium Notes
     digest: bc710fada00dbf32f2a6fd64ea4123f3b9cf6b7553c2bff92fa958cdcfc27e79
@@ -257,4 +271,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T06:44:16.513200497Z"
+generated: "2024-12-22T06:51:06.154111395Z"
