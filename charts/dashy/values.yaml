@@ -1,0 +1,21 @@
+# Default values for dashy
+
+replicaCount: 1
+
+image:
+  repository: lissy93/dashy
+  tag: release-3.1.1
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 4000
+  targetPort: 8080
+
+persistence:
+  mountPath: /app/user-data
+  subPath: config/dashy/user-data
+  pvcName: nfs-client-1
+
+labels:
+  app: dashy

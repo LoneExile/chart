@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "dashy.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "dashy.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "dashy.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+              name: dashy-1
+              protocol: TCP
+          volumeMounts:
+            - mountPath: {{ .Values.persistence.mountPath }}
+              name: dashy-volume-nfs
+              subPath: {{ .Values.persistence.subPath }}
+      volumes:
+        - name: dashy-volume-nfs
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.pvcName }}
