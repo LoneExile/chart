@@ -1,0 +1,26 @@
+replicaCount: 1
+
+image:
+  repository: zadam/trilium
+  pullPolicy: IfNotPresent
+  tag: "0.63.7"
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+persistence:
+  enabled: true
+  claimName: nfs-client-1
+  mountPath: /home/node/trilium-data
+  subPath: config/trilium/data
+
+env:
+  - name: USER_UID
+    value: "1000"
+  - name: USER_GID
+    value: "1000"
+
+nameOverride: ""
+fullnameOverride: ""

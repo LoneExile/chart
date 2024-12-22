@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "trilium.fullname" . }}
+  labels:
+    {{- include "trilium.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "trilium.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "trilium.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.service.targetPort }}
+          {{- if .Values.persistence.enabled }}
+          volumeMounts:
+            - mountPath: {{ .Values.persistence.mountPath }}
+              name: trilium-data
+              subPath: {{ .Values.persistence.subPath }}
+          {{- end }}
+          env:
+            {{- toYaml .Values.env | nindent 12 }}
+      {{- if .Values.persistence.enabled }}
+      volumes:
+        - name: trilium-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}
+      {{- end }}
