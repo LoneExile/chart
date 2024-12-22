@@ -58,6 +58,21 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/filebrowser-0.1.0/filebrowser-0.1.0.tgz
     version: 0.1.0
+  listmonk:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2024-12-22T04:48:42.504625322Z"
+    description: A Helm chart for Listmonk email newsletter application
+    digest: ff448835993cb72ab0dcde03704345b859cb0d62dd28dda7ccf70b2b4932945a
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: listmonk
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/listmonk-0.1.0/listmonk-0.1.0.tgz
+    version: 0.1.0
   memos:
   - apiVersion: v2
     created: "2024-12-11T09:41:26.541494238Z"
@@ -101,4 +116,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T04:08:03.299121572Z"
+generated: "2024-12-22T04:48:42.759482202Z"
