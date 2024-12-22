@@ -27,6 +27,21 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/aria-chart-0.1.0/aria-chart-0.1.0.tgz
     version: 0.1.0
+  blog:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-12-22T05:45:08.420893826Z"
+    description: A Helm chart for Blog application
+    digest: 1f47e50bff3c048bd7bf60bd283eaea5a5edf584190e78eea8e21e5d2c428412
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: blog
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/blog-0.1.0/blog-0.1.0.tgz
+    version: 0.1.0
   cloudflared:
   - apiVersion: v2
     created: "2024-12-12T08:11:44.21160227Z"
@@ -171,4 +186,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T05:37:13.939239777Z"
+generated: "2024-12-22T05:45:09.167285467Z"
