@@ -59,6 +59,8 @@ volumes:
 
 securityContext:
   privileged: true
+  runAsUser: 0
+  runAsGroup: 0
 
 # nodeSelector:
 #   kubernetes.io/hostname: worker-1
