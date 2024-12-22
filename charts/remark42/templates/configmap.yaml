@@ -1,0 +1,16 @@
+{{- if .Values.templates.enabled }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "remark42.fullname" . }}-templates
+  labels:
+    {{- include "remark42.labels" . | nindent 4 }}
+data:
+  {{- range .Values.templates.files }}
+  {{ . }}: |-
+    {{- $content := $.Files.Get (printf "files/templates/%s" .) }}
+    {{- $content := regexReplaceAll "\\{\\{\\ *\\.Values\\.appName\\ *\\}\\}" $content ($.Values.appName) }}
+    {{- $content | nindent 4 }}
+  {{- end }}
+{{- end }}
+

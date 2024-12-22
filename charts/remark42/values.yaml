@@ -1,0 +1,60 @@
+nameOverride: ""
+fullnameOverride: ""
+appName: "" # this is used to generate the name of the template in ./files/templates/*
+
+image:
+  repository: umputun/remark42
+  tag: v1.14.0
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+resources:
+  limits:
+    cpu: 2000m
+    memory: 2Gi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+timeZone: Asia/Bangkok
+
+persistence:
+  existingClaim: "nfs-client-1"
+
+secrets:
+  ADMIN_SHARED_EMAIL: ""
+  ADMIN_SHARED_ID: ""
+  AUTH_GITHUB_CID: ""
+  AUTH_GITHUB_CSEC: ""
+  AUTH_GOOGLE_CID: ""
+  AUTH_GOOGLE_CSEC: ""
+  AUTH_TWITTER_CID: ""
+  AUTH_TWITTER_CSEC: ""
+  DEBUG: ""
+  NOTIFY_EMAIL_ADMIN: ""
+  NOTIFY_EMAIL_FROM: ""
+  NOTIFY_EMAIL_VERIFICATION_SUBJ: ""
+  NOTIFY_USERS: ""
+  REMARK_URL: ""
+  SECRET: ""
+  SMTP_HOST: ""
+  SMTP_PASSWORD: ""
+  SMTP_PORT: ""
+  SMTP_STARTTLS: ""
+  SMTP_TLS: ""
+  SMTP_USERNAME: ""
+
+templates:
+  enabled: true
+  files:
+    - email_confirmation_login.html.tmpl
+    - email_confirmation_subscription.html.tmpl
+    - email_reply.html.tmpl
+    - email_unsubscribe.html.tmpl
+    - error_response.html.tmpl

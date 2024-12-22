@@ -1,0 +1,142 @@
+apiVersion: v1
+data:
+  ADMIN_SHARED_EMAIL: 
+  ADMIN_SHARED_ID: 
+  AUTH_GITHUB_CID: 
+  AUTH_GITHUB_CSEC: 
+  AUTH_GOOGLE_CID: 
+  AUTH_GOOGLE_CSEC: 
+  AUTH_TWITTER_CID: 
+  AUTH_TWITTER_CSEC: 
+  DEBUG: 
+  NOTIFY_EMAIL_ADMIN: 
+  NOTIFY_EMAIL_FROM: 
+  NOTIFY_EMAIL_VERIFICATION_SUBJ: 
+  NOTIFY_USERS: 
+  REMARK_URL: 
+  SECRET: 
+  SMTP_HOST: 
+  SMTP_PASSWORD: 
+  SMTP_PORT: 
+  SMTP_STARTTLS: 
+  SMTP_TLS: 
+  SMTP_USERNAME: 
+kind: Secret
+metadata:
+  labels:
+    app: remark42-service
+  name: remark42
+type: Opaque
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: remark42
+  name: remark42-service
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: remark42
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: remark42-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: remark42-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: remark42
+  template:
+    metadata:
+      labels:
+        app: remark42
+    spec:
+      containers:
+      - env:
+        - name: REMARK_URL
+          valueFrom:
+            secretKeyRef:
+              key: REMARK_URL
+              name: remark42
+        - name: SECRET
+          valueFrom:
+            secretKeyRef:
+              key: SECRET
+              name: remark42
+        - name: AUTH_GOOGLE_CID
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_GOOGLE_CID
+              name: remark42
+        - name: AUTH_GOOGLE_CSEC
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_GOOGLE_CSEC
+              name: remark42
+        - name: AUTH_GITHUB_CID
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_GITHUB_CID
+              name: remark42
+        - name: AUTH_GITHUB_CSEC
+          valueFrom:
+            secretKeyRef:
+              key: AUTH_GITHUB_CSEC
+              name: remark42
+        - name: ADMIN_SHARED_ID
+          valueFrom:
+            secretKeyRef:
+              key: ADMIN_SHARED_ID
+              name: remark42
+        - name: TIME_ZONE
+          value: Asia/Bangkok
+        image: umputun/remark42:latest
+        name: remark42
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2Gi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        securityContext:
+          readOnlyRootFilesystem: false
+        volumeMounts:
+        - mountPath: /srv/var
+          name: remark42-data
+          subPath: config/remark42/var
+        - mountPath: /srv/email_confirmation_login.html.tmpl
+          name: remark42-customised-templates
+          subPath: config/remark42/templates/email_confirmation_login.html.tmpl
+        - mountPath: /srv/email_confirmation_subscription.html.tmpl
+          name: remark42-customised-templates
+          subPath: config/remark42/templates/email_confirmation_subscription.html.tmpl
+        - mountPath: /srv/email_reply.html.tmpl
+          name: remark42-customised-templates
+          subPath: config/remark42/templates/email_reply.html.tmpl
+        - mountPath: /srv/email_unsubscribe.html.tmpl
+          name: remark42-customised-templates
+          subPath: config/remark42/templates/email_unsubscribe.html.tmpl
+        - mountPath: /srv/error_response.html.tmpl
+          name: remark42-customised-templates
+          subPath: config/remark42/templates/error_response.html.tmpl
+      volumes:
+      - name: remark42-data
+        persistentVolumeClaim:
+          claimName: nfs-pvc-worker-1
+      - configMap:
+          name: remark42-customised-templates-files
+        name: remark42-customised-templates

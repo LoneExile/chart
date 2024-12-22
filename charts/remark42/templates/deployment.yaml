@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "remark42.fullname" . }}-deployment
+  labels:
+    {{- include "remark42.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "remark42.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "remark42.labels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
+          env:
+            - name: TIME_ZONE
+              value: {{ .Values.timeZone }}
+            {{- range $key, $value := .Values.secrets }}
+            - name: {{ $key }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "remark42.fullname" $ }}
+                  key: {{ $key }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: remark42-data
+              mountPath: /srv/var
+              subPath: config/remark42/var
+            - name: remark42-customised-templates
+              mountPath: /srv/email_confirmation_login.html.tmpl
+              subPath: config/remark42/templates/email_confirmation_login.html.tmpl
+            - name: remark42-customised-templates
+              mountPath: /srv/email_confirmation_subscription.html.tmpl
+              subPath: config/remark42/templates/email_confirmation_subscription.html.tmpl
+            - name: remark42-customised-templates
+              mountPath: /srv/email_reply.html.tmpl
+              subPath: config/remark42/templates/email_reply.html.tmpl
+            - name: remark42-customised-templates
+              mountPath: /srv/email_unsubscribe.html.tmpl
+              subPath: config/remark42/templates/email_unsubscribe.html.tmpl
+            - name: remark42-customised-templates
+              mountPath: /srv/error_response.html.tmpl
+              subPath: config/remark42/templates/error_response.html.tmpl
+      volumes:
+        - name: remark42-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+        - name: remark42-customised-templates
+          configMap:
+            name: {{ include "remark42.fullname" . }}-templates
