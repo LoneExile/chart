@@ -28,6 +28,16 @@ spec:
           mountPath: /etc/listmonk/config.toml
           subPath: config.toml
       initContainers:
+      - name: wait-for-db
+        image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          until PGPASSWORD="{{ .Values.postgresql.credentials.password }}" pg_isready -h {{ .Release.Name }}-postgresql-service -p {{ .Values.postgresql.service.port }} -U {{ .Values.postgresql.credentials.username }}; do
+            echo "waiting for database to be ready"
+            sleep 2
+          done
       - name: install
         image: "{{ .Values.listmonk.image.repository }}:{{ .Values.listmonk.image.tag }}"
         command:
