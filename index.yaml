@@ -60,6 +60,19 @@ entries:
     version: 0.1.0
   dashy:
   - apiVersion: v2
+    appVersion: 3.x
+    created: "2024-12-22T06:44:15.724375807Z"
+    description: A Helm chart for Dashy application
+    digest: 653182940313a5813c913954781ae18887a2ebc3d88d9e2fd77807435623b1ad
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: dashy
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/dashy-0.1.1/dashy-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: release-3.1.1
     created: "2024-12-22T06:31:12.562751869Z"
     description: A Helm chart for Dashy application
@@ -244,4 +257,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T06:42:50.577790338Z"
+generated: "2024-12-22T06:44:16.513200497Z"
