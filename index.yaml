@@ -186,4 +186,19 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T05:45:09.167285467Z"
+  syncthing:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2024-12-22T06:14:52.00877926Z"
+    description: A Helm chart for Syncthing
+    digest: 6bb4c845d0bcb71152af8d6c27017d626cbe91118a0a56560754766b7a2e7834
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: syncthing
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/syncthing-0.1.0/syncthing-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-12-22T06:14:52.008813594Z"
