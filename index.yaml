@@ -3,6 +3,19 @@ entries:
   aria-chart:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-12-22T02:30:08.742809306Z"
+    description: A Helm chart for Aria2 with AriaNg frontend
+    digest: 27636a1219c8452e7d7dc7eeea9d33d2dd3c3e1f1e5a4a1e02a6cd51811d6d48
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: aria-chart
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/aria-chart-0.1.1/aria-chart-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-12-22T02:07:41.997987831Z"
     description: A Helm chart for Aria2 with AriaNg frontend
     digest: 68bc8360c4c9faa415f16f5097bf5a958ecb73d14dd4ea2af116d0db80fe02c6
@@ -59,4 +72,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T02:07:42.343048997Z"
+generated: "2024-12-22T02:30:09.258581662Z"
