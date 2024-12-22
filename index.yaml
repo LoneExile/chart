@@ -58,6 +58,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
+  dashy:
+  - apiVersion: v2
+    appVersion: release-3.1.1
+    created: "2024-12-22T06:31:12.562751869Z"
+    description: A Helm chart for Dashy application
+    digest: 76c09fec776e64c23f2447802aef34c1d584d9da31b18a021daf8724f80ec9ce
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: dashy
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/dashy-0.1.0/dashy-0.1.0.tgz
+    version: 0.1.0
   filebrowser:
   - apiVersion: v2
     appVersion: s6
@@ -201,4 +215,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/syncthing-0.1.0/syncthing-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T06:14:52.008813594Z"
+generated: "2024-12-22T06:31:13.636216735Z"
