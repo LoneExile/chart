@@ -215,4 +215,19 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/syncthing-0.1.0/syncthing-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T06:31:13.636216735Z"
+  trilium:
+  - apiVersion: v2
+    appVersion: 0.63.7
+    created: "2024-12-22T06:36:57.320738591Z"
+    description: A Helm chart for Trilium Notes
+    digest: 06deda65810247edac52c86c7fa322396acdc44e3d9f0aca3f44bc891f2c8e8f
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: trilium
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-12-22T06:36:57.320768316Z"
