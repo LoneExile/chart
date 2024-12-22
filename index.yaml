@@ -103,6 +103,19 @@ entries:
   jellyfin:
   - apiVersion: v2
     appVersion: 10.10.3
+    created: "2024-12-22T16:47:31.384420267Z"
+    description: A Helm chart for Jellyfin
+    digest: 048ab4174747ab845df0cef87b95253c2800a03a9342355ba984a527edc4d706
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: jellyfin
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/jellyfin-0.1.3/jellyfin-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 10.10.3
     created: "2024-12-22T16:42:04.291417509Z"
     description: A Helm chart for Jellyfin
     digest: 752a19ae616fbdd86a1879e331a6534f23f547d160f42f7ec6ad05c59cc6f996
@@ -311,4 +324,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T16:42:04.925191087Z"
+generated: "2024-12-22T16:47:31.947887495Z"
