@@ -21,6 +21,8 @@ env:
     value: "1000"
   - name: USER_GID
     value: "1000"
+  - name: TRILIUM_PORT
+    value: "8080"
 
 nameOverride: ""
 fullnameOverride: ""
