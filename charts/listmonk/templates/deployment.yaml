@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-listmonk
+  labels:
+    {{- include "listmonk.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: listmonk
+  template:
+    metadata:
+      labels:
+        app: listmonk
+    spec:
+      containers:
+      - name: listmonk
+        image: "{{ .Values.listmonk.image.repository }}:{{ .Values.listmonk.image.tag }}"
+        imagePullPolicy: {{ .Values.listmonk.image.pullPolicy }}
+        command: ["./listmonk"]
+        args: ["--config", "/etc/listmonk/config.toml"]
+        ports:
+        - name: listmonk
+          containerPort: {{ .Values.listmonk.service.targetPort }}
+        volumeMounts:
+        - name: config
+          mountPath: /etc/listmonk/config.toml
+          subPath: config.toml
+      initContainers:
+      - name: install
+        image: "{{ .Values.listmonk.image.repository }}:{{ .Values.listmonk.image.tag }}"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          ./listmonk --install --config /listmonk/config.toml --idempotent --yes && yes | ./listmonk --upgrade
+        volumeMounts:
+        - name: config
+          mountPath: /listmonk/config.toml
+          subPath: config.toml
+      volumes:
+      - name: config
+        configMap:
+          name: {{ .Release.Name }}-config

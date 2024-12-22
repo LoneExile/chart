@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-listmonk-service
+  labels:
+    app: listmonk
+    {{- include "listmonk.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: http
+      port: {{ .Values.listmonk.service.port }}
+      targetPort: {{ .Values.listmonk.service.targetPort }}
+  selector:
+    app: listmonk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-postgresql-service
+  labels:
+    app: postgresql
+    {{- include "listmonk.labels" . | nindent 4 }}
+spec:
+  ports:
+    - name: http
+      port: {{ .Values.postgresql.service.port }}
+      targetPort: {{ .Values.postgresql.service.targetPort }}
+  selector:
+    app: postgresql

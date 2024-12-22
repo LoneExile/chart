@@ -1,0 +1,43 @@
+listmonk:
+  image:
+    repository: listmonk/listmonk
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  config:
+    adminUsername: "admin"
+    adminPassword: "admin"
+    address: "0.0.0.0:9000"
+    
+  service:
+    port: 9000
+    targetPort: 9000
+
+postgresql:
+  image:
+    repository: postgres
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    port: 9432
+    targetPort: 5432
+  
+  credentials:
+    username: "admin"
+    password: "admin"
+    database: "listmonk"
+  
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 25Mi
+
+persistence:
+  claimName: nfs-client-1
+  mountPaths:
+    - path: /var/lib/postgresql/data
+      subPath: config/listmonk/db/data

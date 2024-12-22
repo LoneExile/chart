@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-config
+  labels:
+    app: listmonk-stack
+    {{- include "listmonk.labels" . | nindent 4 }}
+data:
+  config.toml: |
+    [app]
+    address = "{{ .Values.listmonk.config.address }}"
+    admin_username = "{{ .Values.listmonk.config.adminUsername }}"
+    admin_password = "{{ .Values.listmonk.config.adminPassword }}"
+
+    [db]
+    host = "{{ .Release.Name }}-postgresql-service"
+    port = {{ .Values.postgresql.service.port }}
+    user = "{{ .Values.postgresql.credentials.username }}"
+    password = "{{ .Values.postgresql.credentials.password }}"
+    database = "{{ .Values.postgresql.credentials.database }}"
+    ssl_mode = "disable"
+    max_open = 25
+    max_idle = 25
+    max_lifetime = "300s"
+    params = ""
