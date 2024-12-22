@@ -104,6 +104,19 @@ entries:
   listmonk-handle:
   - apiVersion: v2
     appVersion: latest
+    created: "2024-12-22T05:37:13.56220574Z"
+    description: A Helm chart for Listmonk Handle
+    digest: 9792c9d0ef57006289e5fe013ce5360d353c1945c1397eaecbeb84029d837d3a
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: listmonk-handle
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/listmonk-handle-0.1.1/listmonk-handle-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: latest
     created: "2024-12-22T05:32:57.530234905Z"
     description: A Helm chart for Listmonk Handle
     digest: 9c520603151cc2c344a31fa08555d7672690cb845d794e75e9584b7bdd43d065
@@ -158,4 +171,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T05:32:57.780515292Z"
+generated: "2024-12-22T05:37:13.939239777Z"
