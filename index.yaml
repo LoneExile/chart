@@ -72,4 +72,19 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T02:30:09.258581662Z"
+  remark42:
+  - apiVersion: v2
+    appVersion: v1.14.0
+    created: "2024-12-22T04:02:07.278745016Z"
+    description: A Helm chart for Remark42 commenting system
+    digest: 216ce9b8951d0190b0ad674d5fcfe3aa7c8a6f8874b512383f5946127d918280
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: remark42
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
+    version: 0.1.0
+generated: "2024-12-22T04:02:07.278756146Z"
