@@ -4,7 +4,7 @@ replicaCount: 1
 
 image:
   repository: lissy93/dashy
-  tag: release-3.1.1
+  tag: 3.x
   pullPolicy: IfNotPresent
 
 service:
