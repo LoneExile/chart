@@ -28,8 +28,3 @@ probes:
   liveness:
     initialDelaySeconds: 5
     periodSeconds: 30
-
-persistence:
-  existingClaim: "nfs-client-1"
-  configPath: "config/buildkit/config"
-  cachePath: "config/buildkit/cache"

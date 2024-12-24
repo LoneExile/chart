@@ -49,11 +49,7 @@ spec:
           volumeMounts:
             - mountPath: /home/user/.local/share/buildkit
               name: buildkitd
-              subPath: {{ .Values.persistence.configPath }}
-            - mountPath: /var/lib/buildkit
-              name: buildkitd
-              subPath: {{ .Values.persistence.cachePath }}
       volumes:
         - name: buildkitd
-          persistentVolumeClaim:
-            claimName: {{ .Values.persistence.existingClaim }}
+          emptyDir: {}
+          
