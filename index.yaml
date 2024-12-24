@@ -42,6 +42,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/blog-0.1.0/blog-0.1.0.tgz
     version: 0.1.0
+  buildkitd:
+  - apiVersion: v2
+    appVersion: master-rootless
+    created: "2024-12-24T09:56:45.753790341Z"
+    description: A Helm chart for BuildKit daemon
+    digest: 6f1d6dc6494448483a77ece956a0e999565eab015004a9dedb5ca64660a919af
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: buildkitd
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/buildkitd-0.1.0/buildkitd-0.1.0.tgz
+    version: 0.1.0
   cloudflared:
   - apiVersion: v2
     created: "2024-12-12T08:11:44.21160227Z"
@@ -366,4 +380,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-24T03:28:01.489064441Z"
+generated: "2024-12-24T09:56:47.83133816Z"
