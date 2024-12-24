@@ -166,6 +166,21 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/jellyfin-0.1.0/jellyfin-0.1.0.tgz
     version: 0.1.0
+  jenkins:
+  - apiVersion: v2
+    appVersion: 2.491-alpine-jdk21
+    created: "2024-12-24T03:19:11.190389229Z"
+    description: A Helm chart for Jenkins deployment
+    digest: c0c98799ff7d942bbc53ca92767c7d505c836035cdb16af5ac2dee1a75f51ac8
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: jenkins
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/jenkins-0.1.0/jenkins-0.1.0.tgz
+    version: 0.1.0
   listmonk:
   - apiVersion: v2
     appVersion: latest
@@ -337,4 +352,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-22T16:53:13.651549863Z"
+generated: "2024-12-24T03:19:11.991735601Z"
