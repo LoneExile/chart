@@ -1,0 +1,41 @@
+nameOverride: ""
+fullnameOverride: ""
+
+persistence:
+  subPath: config/jenkins
+  claimName: nfs-client-1
+
+jenkins:
+  image:
+    repository: jenkins/jenkins
+    tag: 2.491-alpine-jdk21
+    pullPolicy: IfNotPresent
+
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 4Gi
+    requests:
+      cpu: 500m
+      memory: 500Mi
+
+  service:
+    type: ClusterIP
+    port: 8080
+    jnlpPort: 50000
+
+  probes:
+    liveness:
+      initialDelaySeconds: 90
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 5
+    readiness:
+      initialDelaySeconds: 60
+      periodSeconds: 10
+      timeoutSeconds: 5
+      failureThreshold: 3
+
+  securityContext:
+    fsGroup: 1000
+    runAsUser: 1000

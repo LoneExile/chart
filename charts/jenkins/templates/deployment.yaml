@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "jenkins.fullname" . }}-deployment
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "jenkins.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "jenkins.labels" . | nindent 8 }}
+    spec:
+      serviceAccountName: jenkins-admin
+      securityContext:
+        {{- toYaml .Values.jenkins.securityContext | nindent 8 }}
+      containers:
+        - name: jenkins
+          image: "{{ .Values.jenkins.image.repository }}:{{ .Values.jenkins.image.tag }}"
+          imagePullPolicy: {{ .Values.jenkins.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.jenkins.resources | nindent 12 }}
+          ports:
+            - name: httpport
+              containerPort: 8080
+            - name: jnlpport
+              containerPort: 50000
+          livenessProbe:
+            httpGet:
+              path: '/login'
+              port: 8080
+            {{- toYaml .Values.jenkins.probes.liveness | nindent 12 }}
+          readinessProbe:
+            httpGet:
+              path: '/login'
+              port: 8080
+            {{- toYaml .Values.jenkins.probes.readiness | nindent 12 }}
+          volumeMounts:
+            - name: jenkins-data
+              mountPath: /var/jenkins_home
+              subPath: {{ .Values.persistence.subPath }}
+      volumes:
+        - name: jenkins-data
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}
