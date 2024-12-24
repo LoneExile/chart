@@ -169,6 +169,20 @@ entries:
   jenkins:
   - apiVersion: v2
     appVersion: 2.491-alpine-jdk21
+    created: "2024-12-24T03:28:00.827206667Z"
+    description: A Helm chart for Jenkins deployment
+    digest: 9a1927d28b02932bf3a0341d4f7ae6fef6a1341ad9c4f0d8d52fe6892e676fad
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: jenkins
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/jenkins-0.1.1/jenkins-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 2.491-alpine-jdk21
     created: "2024-12-24T03:19:11.190389229Z"
     description: A Helm chart for Jenkins deployment
     digest: c0c98799ff7d942bbc53ca92767c7d505c836035cdb16af5ac2dee1a75f51ac8
@@ -352,4 +366,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-24T03:19:11.991735601Z"
+generated: "2024-12-24T03:28:01.489064441Z"
