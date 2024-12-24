@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-postgres
+  name: postgres
   labels:
-    {{- include "sonarqube.labels" . | nindent 4 }}
+    {{- include "postgresql.labels" . | nindent 4 }}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      {{- include "sonarqube.labels" . | nindent 6 }}
+      {{- include "postgresql.labels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        {{- include "sonarqube.labels" . | nindent 8 }}
+        {{- include "postgresql.labels" . | nindent 8 }}
     spec:
       securityContext:
-        fsGroup: {{ .Values.postgresql.securityContext.fsGroup }}
+        fsGroup: {{ .Values.postgresql.security.fsGroup }}
       containers:
       - name: postgres
-        image: {{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}
+        image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
         imagePullPolicy: {{ .Values.postgresql.image.pullPolicy }}
         ports:
-        - containerPort: 5432
+        - containerPort: {{ .Values.postgresql.service.port }}
         env:
         - name: ALLOW_EMPTY_PASSWORD
-          value: {{ .Values.postgresql.auth.allowEmptyPassword | quote }}
+          value: "yes"
         envFrom:
         - configMapRef:
-            name: {{ .Release.Name }}-postgres
+            name: postgres
         volumeMounts:
-        - name: postgres-data
+        - name: postgres
           mountPath: /bitnami/postgresql
           subPath: config/postgresql
       volumes:
-      - name: postgres-data
+      - name: postgres
         persistentVolumeClaim:
-          claimName: {{ .Values.global.persistence.existingClaim }}
+          claimName: {{ .Values.global.persistentVolumeClaim }}

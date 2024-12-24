@@ -1,26 +1,30 @@
 global:
   storageClass: ""
-  persistence:
-    existingClaim: "jenkins-pvc"
+  persistentVolumeClaim: "jenkins-pvc"
 
 postgresql:
+  service:
+    port: 5432
   image:
     repository: bitnami/postgresql
-    tag: 17.2.0
+    tag: "17.2.0"
     pullPolicy: IfNotPresent
-  securityContext:
+  labels:
+    app: postgres
+  security:
     fsGroup: 2000
-  auth:
+  credentials:
     username: sonar_user
-    password: S0N4RQUB3
     database: sonar_db
-    allowEmptyPassword: "yes"
+    password: S0N4RQUB3
 
 sonarqube:
   image:
     repository: bitnami/sonarqube
     tag: 10.7.0
     pullPolicy: IfNotPresent
+  labels:
+    app: sonar
   resources:
     requests:
       memory: 1Gi

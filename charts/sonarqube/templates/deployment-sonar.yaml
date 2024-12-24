@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}-sonar
+  name: sonar
   labels:
     {{- include "sonarqube.labels" . | nindent 4 }}
 spec:
@@ -26,9 +26,19 @@ spec:
         imagePullPolicy: IfNotPresent
         securityContext:
           privileged: true
+      - name: wait-for-db
+        image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+        command:
+        - /bin/sh
+        - -c
+        - |
+          until PGPASSWORD="{{ .Values.postgresql.credentials.password }}" pg_isready -h postgres -p {{ .Values.postgresql.service.port }} -U {{ .Values.postgresql.credentials.username }}; do
+            echo "waiting for database to be ready"
+            sleep 2
+          done
       containers:
       - name: sonarqube
-        image: {{ .Values.sonarqube.image.repository }}:{{ .Values.sonarqube.image.tag }}
+        image: "{{ .Values.sonarqube.image.repository }}:{{ .Values.sonarqube.image.tag }}"
         resources:
           {{- toYaml .Values.sonarqube.resources | nindent 12 }}
         imagePullPolicy: {{ .Values.sonarqube.image.pullPolicy }}
@@ -36,15 +46,15 @@ spec:
         - containerPort: 9000
         envFrom:
         - configMapRef:
-            name: {{ .Release.Name }}-sonar-config
+            name: sonar-config
         volumeMounts:
-        - name: sonar-data
+        - name: app-pvc
           mountPath: "/opt/sonarqube/data/"
           subPath: config/sonarqube/data
-        - name: sonar-data
+        - name: app-pvc
           mountPath: "/opt/sonarqube/extensions/"
           subPath: config/sonarqube/extensions
       volumes:
-      - name: sonar-data
+      - name: app-pvc
         persistentVolumeClaim:
-          claimName: {{ .Values.global.persistence.existingClaim }}
+          claimName: {{ .Values.global.persistentVolumeClaim }}
