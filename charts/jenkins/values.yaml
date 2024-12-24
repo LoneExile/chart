@@ -2,6 +2,8 @@ nameOverride: ""
 fullnameOverride: ""
 
 persistence:
+  storageClass: nfs-client
+  size: 50Gi
   subPath: config/jenkins
   claimName: nfs-client-1
 
