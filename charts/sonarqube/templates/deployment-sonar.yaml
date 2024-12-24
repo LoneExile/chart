@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-sonar
+  labels:
+    {{- include "sonarqube.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      {{- include "sonarqube.labels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "sonarqube.labels" . | nindent 8 }}
+    spec:
+      initContainers:
+      - name: init
+        image: busybox
+        command:
+        - sysctl
+        - -w
+        - vm.max_map_count=262144
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+      containers:
+      - name: sonarqube
+        image: {{ .Values.sonarqube.image.repository }}:{{ .Values.sonarqube.image.tag }}
+        resources:
+          {{- toYaml .Values.sonarqube.resources | nindent 12 }}
+        imagePullPolicy: {{ .Values.sonarqube.image.pullPolicy }}
+        ports:
+        - containerPort: 9000
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-sonar-config
+        volumeMounts:
+        - name: sonar-data
+          mountPath: "/opt/sonarqube/data/"
+          subPath: config/sonarqube/data
+        - name: sonar-data
+          mountPath: "/opt/sonarqube/extensions/"
+          subPath: config/sonarqube/extensions
+      volumes:
+      - name: sonar-data
+        persistentVolumeClaim:
+          claimName: {{ .Values.global.persistence.existingClaim }}

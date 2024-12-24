@@ -1,0 +1,29 @@
+global:
+  storageClass: ""
+  persistence:
+    existingClaim: "jenkins-pvc"
+
+postgresql:
+  image:
+    repository: bitnami/postgresql
+    tag: 17.2.0
+    pullPolicy: IfNotPresent
+  securityContext:
+    fsGroup: 2000
+  auth:
+    username: sonar_user
+    password: S0N4RQUB3
+    database: sonar_db
+    allowEmptyPassword: "yes"
+
+sonarqube:
+  image:
+    repository: bitnami/sonarqube
+    tag: 10.7.0
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      memory: 1Gi
+    limits:
+      memory: 4Gi
+  javaOpts: "-Duser.timezone=Asia/Jakarta -Xmx2048m"

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-sonar
+  labels:
+    {{- include "sonarqube.labels" . | nindent 4 }}
+spec:
+  ports:
+  - port: 9000
+    targetPort: 9000
+    name: sonar
+  selector:
+    {{- include "sonarqube.labels" . | nindent 4 }}
