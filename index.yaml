@@ -350,6 +350,19 @@ entries:
     version: 0.1.0
   sonarqube:
   - apiVersion: v2
+    appVersion: 10.7.0
+    created: "2024-12-24T16:05:42.129144672Z"
+    description: A Helm chart for SonarQube with PostgreSQL
+    digest: 96160686a8c75a8fbd8b9856f4cd3b2032271a2f66884cf41016ace10ea470aa
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: sonarqube
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/sonarqube-0.1.1/sonarqube-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: 10.4.0
     created: "2024-12-24T10:48:25.567708675Z"
     description: A Helm chart for SonarQube with PostgreSQL
@@ -420,4 +433,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-24T10:48:25.754056412Z"
+generated: "2024-12-24T16:05:42.502613038Z"
