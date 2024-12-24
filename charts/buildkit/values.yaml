@@ -1,0 +1,35 @@
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  repository: moby/buildkit
+  tag: master-rootless
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+service:
+  type: LoadBalancer
+  port: 1234
+  protocol: TCP
+
+securityContext:
+  appArmorProfile:
+    type: Unconfined
+  seccompProfile:
+    type: Unconfined
+  runAsUser: 1000
+  runAsGroup: 1000
+
+probes:
+  readiness:
+    initialDelaySeconds: 5
+    periodSeconds: 30
+  liveness:
+    initialDelaySeconds: 5
+    periodSeconds: 30
+
+persistence:
+  existingClaim: "nfs-client-1"
+  configPath: "config/buildkit/config"
+  cachePath: "config/buildkit/cache"
