@@ -3,7 +3,7 @@ fullnameOverride: ""
 
 image:
   repository: moby/buildkit
-  tag: master-rootless
+  tag: v0.18.2-rootless
   pullPolicy: IfNotPresent
 
 replicaCount: 1
