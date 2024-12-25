@@ -5,3 +5,9 @@ maintainers:
   - name: LoneExile
     email: Hello@Apinant.dev
     url: https://github.com/LoneExile/chart
+
+# NOTE: this test
+helm-extra-args: --dependency-update
+repositories:
+  - name: prometheus-community
+    url: https://prometheus-community.github.io/helm-charts
