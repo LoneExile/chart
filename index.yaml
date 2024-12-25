@@ -319,6 +319,24 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
     version: 0.1.0
+  prometheus-stack:
+  - apiVersion: v2
+    created: "2024-12-25T11:07:26.680464289Z"
+    dependencies:
+    - alias: prometheus
+      name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 67.4.0
+    description: A Helm chart for Prometheus Stack with storage
+    digest: 5459ccb2246135261f5a82ffe9efae82b0af8752e9d64a7d7c9a7d462ede86c8
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: prometheus-stack
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/prometheus-stack-0.1.0/prometheus-stack-0.1.0.tgz
+    version: 0.1.0
   remark42:
   - apiVersion: v2
     appVersion: v1.14.0
@@ -433,4 +451,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-24T16:05:42.502613038Z"
+generated: "2024-12-25T11:07:27.035622295Z"
