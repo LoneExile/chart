@@ -1,0 +1,63 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}-db-init
+  labels:
+    {{- include "appflowy.labels" . | nindent 4 }}
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "0"
+spec:
+  backoffLimit: 10
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: db-init
+          image: "{{ .Values.gotrue.image.repository }}:{{ .Values.gotrue.image.tag }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              # Wait for PostgreSQL to be ready
+              echo "Waiting for PostgreSQL to be ready..."
+              for i in $(seq 1 30); do
+                if PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c '\q' >/dev/null 2>&1; then
+                  echo "PostgreSQL is ready!"
+                  break
+                fi
+                if [ $i -eq 30 ]; then
+                  echo "Timeout waiting for PostgreSQL to be ready"
+                  exit 1
+                fi
+                echo "Attempt $i: PostgreSQL not ready yet..."
+                sleep 5
+              done
+
+              # Run the initialization script
+              echo "Running initialization script..."
+              if PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -f /docker-entrypoint-initdb.d/init.sql; then
+                echo "Database initialization completed successfully"
+              else
+                echo "Database initialization failed"
+                exit 1
+              fi
+          env:
+            - name: POSTGRES_HOST
+              value: {{ .Release.Name }}-postgresql-ha-postgresql
+            - name: POSTGRES_USER
+              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "username" }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "password" }}"
+            - name: POSTGRES_DB
+              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "database" }}"
+            - name: SUPABASE_PASSWORD
+              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "password" }}"
+          volumeMounts:
+            - name: init-script
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-script
+          configMap:
+            name: {{ .Release.Name }}-db-init-script

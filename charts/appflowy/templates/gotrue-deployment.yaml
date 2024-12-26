@@ -1,0 +1,154 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-gotrue
+  labels:
+    {{- include "gotrue.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.gotrue.replicaCount }}
+  selector:
+    matchLabels:
+      app: gotrue
+  template:
+    metadata:
+      labels:
+        app: gotrue
+    spec:
+      initContainers:
+        - name: check-db-ready
+          image: "{{ .Values.gotrue.image.repository }}:{{ .Values.gotrue.image.tag }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c '\q'; do
+                echo "Waiting for postgres..."
+                sleep 2
+              done
+              echo "PostgreSQL is ready"
+          env:
+            - name: POSTGRES_HOST
+              value: {{ .Release.Name }}-postgresql-ha-postgresql
+            - name: POSTGRES_USER
+              value: {{ index .Values "postgresql-ha" "global" "postgresql" "username" }}
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-postgresql-ha-postgresql
+                  key: password
+            - name: POSTGRES_DB
+              value: {{ index .Values "postgresql-ha" "global" "postgresql" "database" }}
+      containers:
+        - name: gotrue
+          image: "{{ .Values.gotrue.image.repository }}:{{ .Values.gotrue.image.tag }}"
+          imagePullPolicy: {{ .Values.gotrue.image.pullPolicy }}
+          ports:
+            - containerPort: {{ .Values.gotrue.config.port }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}-gotrue-secrets
+          env:
+            - name: GOTRUE_ADMIN_EMAIL
+              value: {{ .Values.gotrue.config.adminEmail | quote }}
+            - name: GOTRUE_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_ADMIN_PASSWORD
+            - name: GOTRUE_DISABLE_SIGNUP
+              value: {{ .Values.gotrue.config.disableSignup | quote }}
+            - name: GOTRUE_SITE_URL
+              value: {{ .Values.gotrue.config.siteUrl | quote }}
+            - name: URI_ALLOW_LIST
+              value: {{ .Values.gotrue.config.uriAllowList | quote }}
+            - name: GOTRUE_JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_JWT_SECRET
+            - name: GOTRUE_JWT_EXP
+              value: {{ .Values.gotrue.config.jwtExp | quote }}
+            - name: GOTRUE_JWT_ADMIN_GROUP_NAME
+              value: {{ .Values.gotrue.config.jwtAdminGroupName | quote }}
+            - name: GOTRUE_DB_DRIVER
+              value: {{ .Values.gotrue.config.dbDriver | quote }}
+            - name: API_EXTERNAL_URL
+              value: {{ .Values.gotrue.config.apiExternalUrl | quote }}
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: DATABASE_URL
+            - name: PORT
+              value: {{ .Values.gotrue.config.port | quote }}
+            - name: GOTRUE_MAILER_URLPATHS_CONFIRMATION
+              value: {{ .Values.gotrue.config.mailerUrlPathsConfirmation | quote }}
+            - name: GOTRUE_SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_SMTP_HOST
+            - name: GOTRUE_SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_SMTP_PORT
+            - name: GOTRUE_SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_SMTP_USER
+            - name: GOTRUE_SMTP_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_SMTP_PASS
+            - name: GOTRUE_SMTP_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}-gotrue-secrets
+                  key: GOTRUE_SMTP_ADMIN_EMAIL
+            - name: GOTRUE_SMTP_MAX_FREQUENCY
+              value: {{ .Values.gotrue.config.smtpMaxFrequency | quote }}
+            - name: GOTRUE_RATE_LIMIT_EMAIL_SENT
+              value: {{ .Values.gotrue.config.rateLimitEmailSent | quote }}
+            - name: GOTRUE_MAILER_AUTOCONFIRM
+              value: {{ .Values.gotrue.config.mailerAutoconfirm | quote }}
+            # OAuth Providers
+            - name: GOTRUE_EXTERNAL_GOOGLE_ENABLED
+              value: {{ .Values.gotrue.oauth.google.enabled | default false | quote }}
+            - name: GOTRUE_EXTERNAL_GOOGLE_CLIENT_ID
+              value: {{ .Values.gotrue.oauth.google.clientId | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_GOOGLE_SECRET
+              value: {{ .Values.gotrue.oauth.google.secret | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_GOOGLE_REDIRECT_URI
+              value: {{ .Values.gotrue.oauth.google.redirectUri | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_GITHUB_ENABLED
+              value: {{ .Values.gotrue.oauth.github.enabled | default false | quote }}
+            - name: GOTRUE_EXTERNAL_GITHUB_CLIENT_ID
+              value: {{ .Values.gotrue.oauth.github.clientId | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_GITHUB_SECRET
+              value: {{ .Values.gotrue.oauth.github.secret | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_GITHUB_REDIRECT_URI
+              value: {{ .Values.gotrue.oauth.github.redirectUri | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_DISCORD_ENABLED
+              value: {{ .Values.gotrue.oauth.discord.enabled | default false | quote }}
+            - name: GOTRUE_EXTERNAL_DISCORD_CLIENT_ID
+              value: {{ .Values.gotrue.oauth.discord.clientId | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_DISCORD_SECRET
+              value: {{ .Values.gotrue.oauth.discord.secret | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_DISCORD_REDIRECT_URI
+              value: {{ .Values.gotrue.oauth.discord.redirectUri | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_APPLE_ENABLED
+              value: {{ .Values.gotrue.oauth.apple.enabled | default false | quote }}
+            - name: GOTRUE_EXTERNAL_APPLE_CLIENT_ID
+              value: {{ .Values.gotrue.oauth.apple.clientId | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_APPLE_SECRET
+              value: {{ .Values.gotrue.oauth.apple.secret | default "" | quote }}
+            - name: GOTRUE_EXTERNAL_APPLE_REDIRECT_URI
+              value: {{ .Values.gotrue.oauth.apple.redirectUri | default "" | quote }}
+            # Metrics
+            - name: GOTRUE_METRICS_ENABLED
+              value: {{ .Values.gotrue.config.metricsEnabled | quote }}
+            - name: GOTRUE_METRICS_EXPORTER
+              value: {{ .Values.gotrue.config.metricsExporter | quote }}

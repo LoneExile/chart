@@ -1,0 +1,105 @@
+minio:
+  global:
+    defaultStorageClass: "nfs-client"
+redis: 
+  global:
+    defaultStorageClass: "nfs-client"
+postgresql-ha:
+  global:
+    defaultStorageClass: "nfs-client"
+    security:
+      allowInsecureImages: true
+    postgresql:
+      username: "postgres"
+      password: "changepassword"
+      database: "postgres"
+      repmgrUsername: "postgres"
+      repmgrPassword: "changepassword"
+      repmgrDatabase: "postgres"
+  postgresql:
+    image:
+      registry: docker.io
+      repository: loneexile/pgvector
+      tag: "20241226"
+
+gotrue:
+  image:
+    repository: appflowyinc/gotrue
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 9999
+
+  config:
+    adminEmail: "admin@example.com"
+    disableSignup: false
+    siteUrl: "appflowy-flutter://"
+    uriAllowList: "*"
+    jwtExp: "7200"
+    jwtAdminGroupName: "supabase_admin"
+    dbDriver: "postgres"
+    apiExternalUrl: "http://your-host"
+    port: 9999
+    mailerUrlPathsConfirmation: "/verify"
+    smtpMaxFrequency: "1ns"
+    rateLimitEmailSent: "100"
+    mailerAutoconfirm: "false"
+    metricsEnabled: "true"
+    metricsExporter: "prometheus"
+
+  secrets:
+    adminPassword: "password"
+    jwtSecret: "hello456"
+    databaseUrl: "postgres://supabase_auth_admin:root@postgres:5432/postgres"
+    smtpHost: "smtp.gmail.com"
+    smtpPort: "465"
+    smtpUser: "email_sender@some_company.com"
+    smtpPass: "email_sender_password"
+    smtpAdminEmail: "comp_admin@some_company.com"
+
+  oauth:
+    google:
+      enabled: false
+      clientId: ""
+      secret: ""
+      redirectUri: ""
+    apple:
+      enabled: false
+      clientId: ""
+      secret: ""
+      redirectUri: ""
+    github:
+      enabled: false
+      clientId: ""
+      secret: ""
+      redirectUri: ""
+    discord:
+      enabled: false
+      clientId: ""
+      secret: ""
+      redirectUri: ""
+
+ai:
+  enabled: false
+  image:
+    repository: appflowyinc/appflowy_ai
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 5001
+
+  config:
+    serverPort: 5001
+
+  secrets:
+    openaiApiKey: ""
+    databaseUrl: "postgresql+psycopg://postgres:changepassword@postgres:5432/postgres"
+    redisUrl: "redis://redis:6379"

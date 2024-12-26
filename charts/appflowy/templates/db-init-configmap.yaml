@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-db-init-script
+  labels:
+    {{- include "appflowy.labels" . | nindent 4 }}
+data:
+  init.sql: |
+    CREATE OR REPLACE FUNCTION create_roles(roles text []) RETURNS void LANGUAGE plpgsql AS $$
+    DECLARE role_name text;
+    BEGIN FOREACH role_name IN ARRAY roles LOOP IF NOT EXISTS (
+        SELECT 1
+        FROM pg_roles
+        WHERE rolname = role_name
+    ) THEN EXECUTE 'CREATE ROLE ' || role_name;
+    END IF;
+    END LOOP;
+    END;
+    $$;
+
+    DO $$ BEGIN IF NOT EXISTS (
+        SELECT
+        FROM pg_catalog.pg_roles
+        WHERE rolname = 'supabase_auth_admin'
+    ) THEN CREATE USER "supabase_auth_admin" BYPASSRLS NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'changepassword'; -- TODO: change password
+    END IF;
+    END $$;
+
+    CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
+    GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
+    ALTER USER supabase_auth_admin SET search_path = 'auth';
