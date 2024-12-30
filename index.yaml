@@ -321,6 +321,22 @@ entries:
     version: 0.1.0
   prometheus-stack:
   - apiVersion: v2
+    created: "2024-12-30T19:37:16.831967545Z"
+    dependencies:
+    - name: kube-prometheus-stack
+      repository: https://prometheus-community.github.io/helm-charts
+      version: 67.4.0
+    description: A Helm chart for Prometheus Stack with storage
+    digest: 31b3537af30440dd46141b5399a4aef0045140a65957004850c21d92d4276181
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: prometheus-stack
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/prometheus-stack-0.1.2/prometheus-stack-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
     created: "2024-12-25T15:12:48.261835932Z"
     dependencies:
     - name: kube-prometheus-stack
@@ -467,4 +483,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-25T15:12:48.998882321Z"
+generated: "2024-12-30T19:37:17.497278861Z"
