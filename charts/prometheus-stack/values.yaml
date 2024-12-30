@@ -9,6 +9,10 @@ kube-prometheus-stack:
             resources:
               requests:
                 storage: 50Gi
+      ruleSelectorNilUsesHelmValues: false
+      serviceMonitorSelectorNilUsesHelmValues: false
+      podMonitorSelectorNilUsesHelmValues: false
+      probeSelectorNilUsesHelmValues: false
 
   alertmanager:
     alertmanagerSpec:
