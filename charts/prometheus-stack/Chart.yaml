@@ -1,7 +1,7 @@
 apiVersion: v2
 name: prometheus-stack
 description: A Helm chart for Prometheus Stack with storage
-version: 0.1.1
+version: 0.1.2
 dependencies:
   - name: kube-prometheus-stack
     version: 67.4.0
