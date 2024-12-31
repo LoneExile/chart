@@ -1,3 +1,4 @@
+{{- if .Values.gotrue.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,26 +17,23 @@ spec:
     spec:
       initContainers:
         - name: check-db-ready
-          image: "{{ .Values.gotrue.image.repository }}:{{ .Values.gotrue.image.tag }}"
+          image: "{{ index .Values "postgresql-ha" "postgresql" "image" "repository" }}:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}"
           command:
             - /bin/bash
             - -c
             - |
               until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c '\q'; do
                 echo "Waiting for postgres..."
-                sleep 2
+                sleep 60
               done
               echo "PostgreSQL is ready"
           env:
             - name: POSTGRES_HOST
-              value: {{ .Release.Name }}-postgresql-ha-postgresql
+              value: {{ .Release.Name }}-postgresql-ha-pgpool
             - name: POSTGRES_USER
-              value: {{ index .Values "postgresql-ha" "global" "postgresql" "username" }}
+              value: {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }}
             - name: POSTGRES_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-postgresql-ha-postgresql
-                  key: password
+              value: "{{ index .Values "postgresql-ha" "pgpool" "customUsers" "passwords" }}"
             - name: POSTGRES_DB
               value: {{ index .Values "postgresql-ha" "global" "postgresql" "database" }}
       containers:
@@ -50,22 +48,12 @@ spec:
           env:
             - name: GOTRUE_ADMIN_EMAIL
               value: {{ .Values.gotrue.config.adminEmail | quote }}
-            - name: GOTRUE_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_ADMIN_PASSWORD
             - name: GOTRUE_DISABLE_SIGNUP
               value: {{ .Values.gotrue.config.disableSignup | quote }}
             - name: GOTRUE_SITE_URL
               value: {{ .Values.gotrue.config.siteUrl | quote }}
             - name: URI_ALLOW_LIST
               value: {{ .Values.gotrue.config.uriAllowList | quote }}
-            - name: GOTRUE_JWT_SECRET
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_JWT_SECRET
             - name: GOTRUE_JWT_EXP
               value: {{ .Values.gotrue.config.jwtExp | quote }}
             - name: GOTRUE_JWT_ADMIN_GROUP_NAME
@@ -74,40 +62,10 @@ spec:
               value: {{ .Values.gotrue.config.dbDriver | quote }}
             - name: API_EXTERNAL_URL
               value: {{ .Values.gotrue.config.apiExternalUrl | quote }}
-            - name: DATABASE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: DATABASE_URL
             - name: PORT
               value: {{ .Values.gotrue.config.port | quote }}
             - name: GOTRUE_MAILER_URLPATHS_CONFIRMATION
               value: {{ .Values.gotrue.config.mailerUrlPathsConfirmation | quote }}
-            - name: GOTRUE_SMTP_HOST
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_SMTP_HOST
-            - name: GOTRUE_SMTP_PORT
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_SMTP_PORT
-            - name: GOTRUE_SMTP_USER
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_SMTP_USER
-            - name: GOTRUE_SMTP_PASS
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_SMTP_PASS
-            - name: GOTRUE_SMTP_ADMIN_EMAIL
-              valueFrom:
-                secretKeyRef:
-                  name: {{ .Release.Name }}-gotrue-secrets
-                  key: GOTRUE_SMTP_ADMIN_EMAIL
             - name: GOTRUE_SMTP_MAX_FREQUENCY
               value: {{ .Values.gotrue.config.smtpMaxFrequency | quote }}
             - name: GOTRUE_RATE_LIMIT_EMAIL_SENT
@@ -152,3 +110,4 @@ spec:
               value: {{ .Values.gotrue.config.metricsEnabled | quote }}
             - name: GOTRUE_METRICS_EXPORTER
               value: {{ .Values.gotrue.config.metricsExporter | quote }}
+{{- end }}

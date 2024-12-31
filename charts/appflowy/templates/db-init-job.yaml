@@ -15,13 +15,14 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: db-init
-          image: "{{ .Values.gotrue.image.repository }}:{{ .Values.gotrue.image.tag }}"
+          image: "{{ index .Values "postgresql-ha" "postgresql" "image" "repository" }}:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}"
           command:
-            - /bin/bash
+            - /bin/sh
             - -c
             - |
               # Wait for PostgreSQL to be ready
               echo "Waiting for PostgreSQL to be ready..."
+              echo "POSTGRES_HOST: $POSTGRES_HOST"
               for i in $(seq 1 30); do
                 if PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c '\q' >/dev/null 2>&1; then
                   echo "PostgreSQL is ready!"
@@ -32,7 +33,7 @@ spec:
                   exit 1
                 fi
                 echo "Attempt $i: PostgreSQL not ready yet..."
-                sleep 5
+                sleep 60
               done
 
               # Run the initialization script
@@ -45,7 +46,8 @@ spec:
               fi
           env:
             - name: POSTGRES_HOST
-              value: {{ .Release.Name }}-postgresql-ha-postgresql
+              value: {{ .Release.Name }}-postgresql-ha-pgpool
+              # value: {{ .Release.Name }}-postgresql-ha-postgresql
             - name: POSTGRES_USER
               value: "{{ index .Values "postgresql-ha" "global" "postgresql" "username" }}"
             - name: POSTGRES_PASSWORD

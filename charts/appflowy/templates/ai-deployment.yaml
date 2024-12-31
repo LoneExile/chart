@@ -16,6 +16,28 @@ spec:
       labels:
         app: ai
     spec:
+#TODO: temp this
+      initContainers:
+        - name: check-db-ready
+          image: "{{ index .Values "postgresql-ha" "postgresql" "image" "repository" }}:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}"
+          command:
+            - /bin/bash
+            - -c
+            - |
+              until PGPASSWORD=$POSTGRES_PASSWORD psql -h $POSTGRES_HOST -U $POSTGRES_USER -d $POSTGRES_DB -c '\q'; do
+                echo "Waiting for postgres..."
+                sleep 60
+              done
+              echo "PostgreSQL is ready"
+          env:
+            - name: POSTGRES_HOST
+              value: {{ .Release.Name }}-postgresql-ha-pgpool
+            - name: POSTGRES_USER
+              value: {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }}
+            - name: POSTGRES_PASSWORD
+              value: "{{ index .Values "postgresql-ha" "pgpool" "customUsers" "passwords" }}"
+            - name: POSTGRES_DB
+              value: {{ index .Values "postgresql-ha" "global" "postgresql" "database" }}
       containers:
         - name: ai
           image: "{{ .Values.ai.image.repository }}:{{ .Values.ai.image.tag }}"

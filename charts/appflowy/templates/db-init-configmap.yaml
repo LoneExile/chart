@@ -21,11 +21,11 @@ data:
     DO $$ BEGIN IF NOT EXISTS (
         SELECT
         FROM pg_catalog.pg_roles
-        WHERE rolname = 'supabase_auth_admin'
-    ) THEN CREATE USER "supabase_auth_admin" BYPASSRLS NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD 'changepassword'; -- TODO: change password
+        WHERE rolname = '{{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }}'
+    ) THEN CREATE USER "{{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }}" BYPASSRLS NOINHERIT CREATEROLE LOGIN NOREPLICATION PASSWORD '{{ index .Values "postgresql-ha" "pgpool" "customUsers" "passwords" }}';
     END IF;
     END $$;
 
-    CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION supabase_auth_admin;
-    GRANT CREATE ON DATABASE postgres TO supabase_auth_admin;
-    ALTER USER supabase_auth_admin SET search_path = 'auth';
+    CREATE SCHEMA IF NOT EXISTS auth AUTHORIZATION {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }};
+    GRANT CREATE ON DATABASE {{ index .Values "postgresql-ha" "global" "postgresql" "database" }} TO {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }};
+    ALTER USER {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }} SET search_path = 'auth';

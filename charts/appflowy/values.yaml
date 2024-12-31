@@ -1,9 +1,18 @@
 minio:
   global:
     defaultStorageClass: "nfs-client"
-redis: 
+  auth:
+    rootUser: "minioadmin"
+    rootPassword: "minioadmin"
+  defaultBuckets: "appflowy"
+redis:
   global:
     defaultStorageClass: "nfs-client"
+  auth:
+    enabled: false
+    sentinel: false
+    # password: "changepassword"  # You should change this to a secure password
+
 postgresql-ha:
   global:
     defaultStorageClass: "nfs-client"
@@ -16,17 +25,162 @@ postgresql-ha:
       repmgrUsername: "postgres"
       repmgrPassword: "changepassword"
       repmgrDatabase: "postgres"
+  pgpool:
+    # NOTE: don't add multiple customUsers
+    customUsers:
+      usernames: "supabase_auth_admin"
+      passwords: "changepassword"
   postgresql:
     image:
       registry: docker.io
       repository: loneexile/pgvector
       tag: "20241226"
+    # configuration: |-
+    #   search_path = 'public,repmgr'
+    #   shared_preload_libraries = 'pgaudit, repmgr'
+    #   port = 5432
 
-gotrue:
+    #TODO:
+    # - create helper for each db string
+    # - use direct db?
+
+postgresql:
   image:
-    repository: appflowyinc/gotrue
+    repository: pgvector/pgvector
+    tag: pg16
+    pullPolicy: IfNotPresent
+  
+  service:
+    port: 5432
+    targetPort: 5432
+  
+  credentials:
+    username: "postgres"
+    password: "changepassword"
+    database: "postgres"
+  
+  resources:
+    limits:
+      cpu: "1"
+      memory: 1Gi
+    requests:
+      cpu: 100m
+      memory: 25Mi
+
+  persistence:
+    defaultStorageClass: "nfs-client"
+    claimName: nfs-client-test
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        # subPath: config/listmonk/db/data
+
+
+appflowy_cloud:
+  enabled: true
+  image:
+    repository: appflowyinc/appflowy_cloud
     tag: latest
     pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  service:
+    type: ClusterIP
+    port: 9999
+
+  resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+  config:
+    rustLog: "trace" # "trace" "debug" "info" "warn" "error"
+    environment: "production"
+    s3CreateBucket: "true"
+    s3UseMinio: "true"
+    s3Region: ""
+    s3Bucket: "appflowy"
+    mailerSmtpTlsKind: "wrapper" # "none" "wrapper" "required" "opportunistic"
+    accessControl: "true"
+    databaseMaxConnections: "40"
+    aiServerPort: "5001"
+
+  secrets:
+    databaseUrl: "postgresql://postgres:changepassword@appflowy-postgresql-ha-pgpool:5432/postgres"
+    gotrueJwtSecret: "hello456" # Match with gotrue.secrets.jwtSecret
+    gotrueJwtExp: "7200" # Match with gotrue.config.jwtExp
+    gotrueExtUrl: "http://localhost" # Match with gotrue.config.apiExternalUrl
+    gotrueAdminEmail: "admin@example.com" # Match with gotrue.config.adminEmail
+    gotrueAdminPassword: "password" # Match with gotrue.secrets.adminPassword
+    s3AccessKey: "minioadmin" # Default minio access key
+    s3SecretKey: "minioadmin" # Default minio secret key
+    mailerSmtpHost: "smtp.gmail.com" # Match with gotrue.secrets.smtpHost
+    mailerSmtpPort: "465" # Match with gotrue.secrets.smtpPort
+    mailerSmtpUsername: "notify@appflowy.io" # Match with gotrue.secrets.smtpUser
+    mailerSmtpEmail: "notify@appflowy.io" # Same as smtp username
+    mailerSmtpPassword: "email_sender_password" # Match with gotrue.secrets.smtpPass
+    aiServerHost: "{{ .Release.Name }}-ai"
+    aiOpenaiApiKey: "test" # Match with ai.secrets.openaiApiKey
+
+
+appflowy_worker:
+  enabled: true
+  image:
+    repository: appflowyinc/appflowy_worker
+    tag: latest
+    pullPolicy: IfNotPresent
+
+  replicaCount: 1
+
+  config:
+    rustLog: "info"
+    environment: "production"
+    workerEnvironment: "production"
+    workerImportTickInterval: "30"
+    s3UseMinio: "true"
+    s3Bucket: "appflowy"
+    s3Region: ""
+
+  secrets:
+    s3AccessKey: "minioadmin"
+    s3SecretKey: "minioadmin"
+    mailerSmtpHost: "smtp.gmail.com"
+    mailerSmtpPort: "465"
+    mailerSmtpUsername: "notify@appflowy.io"
+    mailerSmtpEmail: "notify@appflowy.io"
+    mailerSmtpPassword: "email_sender_password"
+
+  resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  nodeSelector: {}
+
+  tolerations: []
+
+  affinity: {}
+
+gotrue:
+  enabled: true
+  image:
+    # repository: appflowyinc/gotrue
+    # tag: latest
+    repository: loneexile/gotrue
+    tag: "20241229"
+    pullPolicy: Always
 
   replicaCount: 1
 
@@ -42,7 +196,7 @@ gotrue:
     jwtExp: "7200"
     jwtAdminGroupName: "supabase_admin"
     dbDriver: "postgres"
-    apiExternalUrl: "http://your-host"
+    apiExternalUrl: "http://localhost"
     port: 9999
     mailerUrlPathsConfirmation: "/verify"
     smtpMaxFrequency: "1ns"
@@ -54,7 +208,6 @@ gotrue:
   secrets:
     adminPassword: "password"
     jwtSecret: "hello456"
-    databaseUrl: "postgres://supabase_auth_admin:root@postgres:5432/postgres"
     smtpHost: "smtp.gmail.com"
     smtpPort: "465"
     smtpUser: "email_sender@some_company.com"
@@ -84,7 +237,7 @@ gotrue:
       redirectUri: ""
 
 ai:
-  enabled: false
+  enabled: true
   image:
     repository: appflowyinc/appflowy_ai
     tag: latest
@@ -100,6 +253,5 @@ ai:
     serverPort: 5001
 
   secrets:
-    openaiApiKey: ""
-    databaseUrl: "postgresql+psycopg://postgres:changepassword@postgres:5432/postgres"
+    openaiApiKey: "test"
     redisUrl: "redis://redis:6379"

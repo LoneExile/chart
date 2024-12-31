@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-appflowy-worker-config
+  labels:
+    {{- include "gotrue.labels" . | nindent 4 }}
+data:
+  RUST_LOG: {{ .Values.appflowy_worker.config.rustLog | quote }}
+  APPFLOWY_ENVIRONMENT: {{ .Values.appflowy_worker.config.environment | quote }}
+  APPFLOWY_WORKER_ENVIRONMENT: {{ .Values.appflowy_worker.config.workerEnvironment | quote }}
+  APPFLOWY_WORKER_IMPORT_TICK_INTERVAL: {{ .Values.appflowy_worker.config.workerImportTickInterval | quote }}
+  APPFLOWY_S3_USE_MINIO: {{ .Values.appflowy_worker.config.s3UseMinio | quote }}
+  APPFLOWY_S3_BUCKET: {{ .Values.appflowy_worker.config.s3Bucket | quote }}
+  APPFLOWY_S3_REGION: {{ .Values.appflowy_worker.config.s3Region | quote }}
