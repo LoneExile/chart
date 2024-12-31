@@ -21,7 +21,7 @@ spec:
 #TODO: temp this
       initContainers:
         - name: check-db-ready
-          image: "{{ index .Values "postgresql-ha" "postgresql" "image" "repository" }}:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}"
+          image: "{{ index .Values "postgresql" "image" "repository" }}:{{ index .Values "postgresql" "image" "tag" }}"
           command:
             - /bin/bash
             - -c
@@ -33,13 +33,13 @@ spec:
               echo "PostgreSQL is ready"
           env:
             - name: POSTGRES_HOST
-              value: {{ .Release.Name }}-postgresql-ha-pgpool
+              value: {{ .Release.Name }}-postgresql
             - name: POSTGRES_USER
-              value: {{ index .Values "postgresql-ha" "pgpool" "customUsers" "usernames" }}
+              value: {{ index .Values "postgresql" "customUsers" "usernames" }}
             - name: POSTGRES_PASSWORD
-              value: "{{ index .Values "postgresql-ha" "pgpool" "customUsers" "passwords" }}"
+              value: "{{ index .Values "postgresql" "customUsers" "passwords" }}"
             - name: POSTGRES_DB
-              value: {{ index .Values "postgresql-ha" "global" "postgresql" "database" }}
+              value: {{ index .Values "postgresql" "global" "postgresql" "auth" "database" }}
       containers:
         - name: appflowy-cloud
           image: "{{ .Values.appflowy_cloud.image.repository }}:{{ .Values.appflowy_cloud.image.tag }}"

@@ -15,7 +15,7 @@ spec:
       restartPolicy: OnFailure
       containers:
         - name: db-init
-          image: "{{ index .Values "postgresql-ha" "postgresql" "image" "repository" }}:{{ index .Values "postgresql-ha" "postgresql" "image" "tag" }}"
+          image: "{{ index .Values "postgresql" "image" "repository" }}:{{ index .Values "postgresql" "image" "tag" }}"
           command:
             - /bin/sh
             - -c
@@ -46,16 +46,15 @@ spec:
               fi
           env:
             - name: POSTGRES_HOST
-              value: {{ .Release.Name }}-postgresql-ha-pgpool
-              # value: {{ .Release.Name }}-postgresql-ha-postgresql
+              value: {{ .Release.Name }}-postgresql
             - name: POSTGRES_USER
-              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "username" }}"
+              value: "{{ index .Values "postgresql" "global" "postgresql" "auth" "username" }}"
             - name: POSTGRES_PASSWORD
-              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "password" }}"
+              value: "{{ index .Values "postgresql" "global" "postgresql" "auth" "password" }}"
             - name: POSTGRES_DB
-              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "database" }}"
+              value: "{{ index .Values "postgresql" "global" "postgresql" "auth" "database" }}"
             - name: SUPABASE_PASSWORD
-              value: "{{ index .Values "postgresql-ha" "global" "postgresql" "password" }}"
+              value: "{{ index .Values "postgresql" "global" "postgresql" "auth" "password" }}"
           volumeMounts:
             - name: init-script
               mountPath: /docker-entrypoint-initdb.d
