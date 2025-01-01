@@ -1,0 +1,77 @@
+nameOverride: ""
+fullnameOverride: ""
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+app:
+  replicaCount: 1
+  image:
+    repository: amruthpillai/reactive-resume
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+  resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+  config:
+    publicUrl: "https://resume.voidbox.io"
+    # storageUrl: "http://localhost:9000/default"
+    chromeToken: "chrome_token"
+    accessTokenSecret: "access_token_secret"
+    refreshTokenSecret: "refresh_token_secret"
+    mailFrom: "noreply@localhost"
+    disableSignups: false
+    disableEmailAuth: false
+#####################################################
+chrome:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/browserless/chromium
+    pullPolicy: IfNotPresent
+    tag: "latest"
+  service:
+    type: ClusterIP
+    port: 3000
+  resources: {}
+  config:
+    timeout: 10000
+    concurrent: 10
+    token: "chrome_token"
+    exitOnHealthFailure: true
+    preRequestHealthCheck: true
+#####################################################
+minio:
+  global:
+    defaultStorageClass: "nfs-client"
+  auth:
+    rootUser: "minioadmin"
+    rootPassword: "minioadmin"
+  defaultBuckets: "default"
+#####################################################
+postgresql:
+  global:
+    defaultStorageClass: "nfs-client"
+    security:
+      allowInsecureImages: true
+    postgresql:
+      auth:
+        username: "postgres"
+        password: "postgres"
+        database: "postgres"
+        # service:
+        #   ports:
+        #     postgresql: "5432"
+  image:
+    registry: docker.io
+    repository: loneexile/pgvector
+    tag: "20250101"
+    pullPolicy: Always
+#####################################################

@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "reactive-resume.fullname" . }}-app
+  labels:
+    {{- include "reactive-resume.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "reactive-resume.selectorLabels" . | nindent 6 }}
+      component: app
+  template:
+    metadata:
+      labels:
+        {{- include "reactive-resume.selectorLabels" . | nindent 8 }}
+        component: app
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}"
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              value: "3000"
+            - name: NODE_ENV
+              value: "production"
+            - name: PUBLIC_URL
+              value: {{ .Values.app.config.publicUrl }}
+            - name: STORAGE_URL
+              # value: {{ .Values.app.config.storageUrl }}
+              value: {{ .Values.app.config.storageUrl | default (printf "http://%s-minio:9000" .Release.Name) }}
+
+            # Chrome configuration
+            - name: CHROME_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: chrome-token
+            - name: CHROME_URL
+              value: "ws://{{ include "reactive-resume.fullname" . }}-chrome:3000"
+
+            # Database configuration
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: database-url
+
+            # Auth configuration
+            - name: ACCESS_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: access-token-secret
+            - name: REFRESH_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: refresh-token-secret
+
+            # Email configuration
+            - name: MAIL_FROM
+              value: {{ .Values.app.config.mailFrom }}
+            - name: DISABLE_SIGNUPS
+              value: {{ .Values.app.config.disableSignups | default false | quote }}
+            - name: DISABLE_EMAIL_AUTH
+              value: {{ .Values.app.config.disableEmailAuth | default false | quote }}
+
+            # MinIO configuration
+            - name: STORAGE_ENDPOINT
+              value: {{ printf "%s-minio" .Release.Name }}
+              # value: {{ .Values.minio.host }}
+            - name: STORAGE_PORT
+              value: {{ .Values.minio.port | default 9000 | quote }}
+            - name: STORAGE_REGION
+              value: {{ .Values.minio.region | default "" }}
+            - name: STORAGE_BUCKET
+              value: {{ .Values.minio.defaultBuckets }}
+            - name: STORAGE_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: storage-access-key
+            - name: STORAGE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: storage-secret-key
+            - name: STORAGE_USE_SSL
+              value: {{ .Values.minio.useSsl | default false | quote }}
+            - name: STORAGE_SKIP_BUCKET_CHECK
+              value: {{ .Values.minio.skipBucketCheck | default false | quote }}
+          resources:
+            {{- toYaml .Values.app.resources | nindent 12 }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "reactive-resume.fullname" . }}-chrome
+  labels:
+    {{- include "reactive-resume.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.chrome.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "reactive-resume.selectorLabels" . | nindent 6 }}
+      component: chrome
+  template:
+    metadata:
+      labels:
+        {{- include "reactive-resume.selectorLabels" . | nindent 8 }}
+        component: chrome
+    spec:
+      containers:
+        - name: chrome
+          image: "{{ .Values.chrome.image.repository }}:{{ .Values.chrome.image.tag }}"
+          imagePullPolicy: {{ .Values.chrome.image.pullPolicy }}
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TIMEOUT
+              value: {{ .Values.chrome.config.timeout | quote }}
+            - name: CONCURRENT
+              value: {{ .Values.chrome.config.concurrent | quote }}
+            - name: TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "reactive-resume.fullname" . }}
+                  key: chrome-token
+          resources:
+            {{- toYaml .Values.chrome.resources | nindent 12 }}
