@@ -18,6 +18,72 @@ spec:
       middlewares:
         - name: cors
         - name: auth-headers
+        # - name: auth-redirect
+        - name: verify-redirect
+    # API Chat
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/api/chat`)
+      priority: 15
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: cors
+        - name: api-headers
+        - name: long-timeout
+    # API Import
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/api/import`)
+      priority: 15
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: cors
+        - name: api-headers
+        - name: large-upload
+        - name: long-timeout
+    # API Workspace Publish
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/api/workspace`) && Query(`publish`)
+      priority: 15
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: cors
+        - name: api-headers
+        - name: large-upload
+    # General API
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/api`)
+      priority: 10
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: cors
+        - name: api-headers
+    # WebSocket
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/ws`)
+      priority: 10
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: websocket-headers
+    # API Chat
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/api/chat`)
+      priority: 15
+      services:
+        - name: appflowy-cloud
+          port: 8000
+      middlewares:
+        - name: cors
+        - name: api-headers
+        - name: long-timeout
     # GoTrue
     - kind: Rule
       match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/gotrue`)
@@ -29,7 +95,6 @@ spec:
         - name: strip-gotrue-prefix
         - name: cors
         - name: gotrue-headers
-
     # WebSocket
     - kind: Rule
       match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/ws`)
@@ -37,7 +102,6 @@ spec:
       services:
         - name: appflowy-cloud
           port: 8000
-
     # AppFlowy AI
     - kind: Rule
       match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/ai`)
@@ -45,7 +109,6 @@ spec:
       services:
         - name: appflowy-ai
           port: 5001
-
     # Minio Console
     - kind: Rule
       match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/minio`)
@@ -57,7 +120,6 @@ spec:
         - name: cors
         - name: strip-minio-prefix
         - name: minio-headers
-
     # PgAdmin
     - kind: Rule
       match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/pgadmin`)
@@ -69,7 +131,6 @@ spec:
         - name: cors
         - name: strip-pgadmin-prefix
         - name: pgadmin-headers
-
 ---
 # Middlewares for path stripping
 apiVersion: traefik.io/v1alpha1
@@ -92,6 +153,38 @@ spec:
     customRequestHeaders:
       X-Script-Name: "/gotrue"
 ---
+# apiVersion: traefik.io/v1alpha1
+# kind: Middleware
+# metadata:
+#   name: auth-redirect
+#   namespace: test
+# spec:
+#   headers:
+#     customResponseHeaders:
+#       Access-Control-Allow-Origin: "appflowy-flutter://"
+#       Access-Control-Allow-Methods: "GET, POST, OPTIONS"
+#       Access-Control-Allow-Headers: "*"
+#       Access-Control-Allow-Credentials: "true"
+#       Access-Control-Expose-Headers: "Location"
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: verify-redirect
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+      X-Forwarded-Host: "{{ .Host }}"
+      Host: "{{ .Host }}"
+    customResponseHeaders:
+      Access-Control-Allow-Origin: "appflowy-flutter://"
+      Access-Control-Allow-Methods: "GET, POST, OPTIONS"
+      Access-Control-Allow-Headers: "Authorization, Content-Type"
+      Access-Control-Allow-Credentials: "true"
+      Access-Control-Expose-Headers: "Location, Content-Type"
+      Content-Type: "text/html"
+---
 # Add a new middleware for auth-related headers
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -102,17 +195,55 @@ spec:
   headers:
     customRequestHeaders:
       X-Forwarded-Proto: "https"
-    # customResponseHeaders:
-    #   Access-Control-Allow-Origin: "appflowy-flutter://"
-    #   Access-Control-Allow-Methods: "GET, POST, OPTIONS"
-    #   Access-Control-Allow-Headers: "Authorization, Content-Type"
-    #   Access-Control-Allow-Credentials: "true"
     customResponseHeaders:
       Access-Control-Allow-Origin: "*"
       Access-Control-Allow-Methods: "GET, POST, OPTIONS, PUT, DELETE"
       Access-Control-Allow-Headers: "Authorization, Content-Type, Accept, Client-Version"
       Access-Control-Allow-Credentials: "true"
       Access-Control-Expose-Headers: "Location"
+      # Location: ""
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: websocket-headers
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      Connection: "Upgrade"
+      Upgrade: "websocket"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: api-headers
+spec:
+  headers:
+    customRequestHeaders:
+      X-Real-IP: "{{ .RemoteAddr }}"
+      X-Forwarded-For: "{{ .RemoteAddr }}"
+      X-Forwarded-Proto: "{{ .Scheme }}"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: large-upload
+spec:
+  buffering:
+    maxRequestBodyBytes: 268435456 # 256MB
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: long-timeout
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      proxy_read_timeout: "600"
+      proxy_connect_timeout: "600"
+      proxy_send_timeout: "600"
 ---
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
@@ -176,4 +307,5 @@ spec:
     accessControlAllowOriginList:
       - "http://127.0.0.1:8000"
       - "appflowy-flutter://"
+      - "*"
     accessControlMaxAge: 3600
