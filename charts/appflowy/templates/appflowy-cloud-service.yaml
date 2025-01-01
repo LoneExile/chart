@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ .Release.Name }}-appflowy-cloud
+  name: {{ .Release.Name }}-cloud
   labels:
     {{- include "gotrue.labels" . | nindent 4 }}
     app.kubernetes.io/component: appflowy_cloud
