@@ -133,18 +133,22 @@ gotrue:
   config:
     adminEmail: "admin@example.com"
     disableSignup: false
-    siteUrl: "appflowy-flutter://"
-    uriAllowList: "*"
+    # siteUrl: "appflowy-flutter://"
+    # uriAllowList: "*"
+
+    # FIX:
+    siteUrl: "https://appflowy.voidbox.io"
+    uriAllowList: "appflowy-flutter://*,https://appflowy.voidbox.io/*"
+    apiExternalUrl: "https://appflowy.voidbox.io"
+    mailerAutoconfirm: "true"
+
     jwtExp: "7200"
     jwtAdminGroupName: "supabase_admin"
     dbDriver: "postgres"
-    # FIX:
-    apiExternalUrl: "https://appflowy.voidbox.io"
     port: 9999
     mailerUrlPathsConfirmation: "/verify"
     smtpMaxFrequency: "1ns"
     rateLimitEmailSent: "100"
-    mailerAutoconfirm: "false"
     metricsEnabled: "true"
     metricsExporter: "prometheus"
   secrets:
