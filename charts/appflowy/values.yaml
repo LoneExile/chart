@@ -45,7 +45,7 @@ appflowy_cloud:
   replicaCount: 1
   service:
     type: ClusterIP
-    port: 9999
+    port: 8000
   resources: {}
   # limits:
   #   cpu: 100m

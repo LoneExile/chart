@@ -1,0 +1,18 @@
+{{- if .Values.appflowy_cloud.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-appflowy-cloud
+  labels:
+    {{- include "gotrue.labels" . | nindent 4 }}
+    app.kubernetes.io/component: appflowy_cloud
+spec:
+  type: {{ .Values.appflowy_cloud.service.type }}
+  ports:
+    - port: {{ .Values.appflowy_cloud.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: appflowy_cloud
+{{- end }}
