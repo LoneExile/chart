@@ -134,7 +134,7 @@ gotrue:
     adminEmail: "admin@example.com"
     disableSignup: false
     # FIX:
-    mailerAutoconfirm: "true"
+    mailerAutoconfirm: true
     siteUrl: "appflowy-flutter://"
     apiExternalUrl: "https://appflowy.voidbox.io"
     uriAllowList: "*"
@@ -145,7 +145,7 @@ gotrue:
     mailerUrlPathsConfirmation: "/verify"
     smtpMaxFrequency: "1ns"
     rateLimitEmailSent: "100"
-    metricsEnabled: "true"
+    metricsEnabled: true
     metricsExporter: "prometheus"
   secrets:
     adminPassword: "password"

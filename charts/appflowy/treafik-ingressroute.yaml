@@ -1,0 +1,179 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: appflowy
+  namespace: test
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    # OAuth Callback
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && (PathPrefix(`/callback`) || PathPrefix(`/authorize`) || PathPrefix(`/verify`))
+      priority: 20
+      services:
+        - name: appflowy-gotrue
+          port: 9999
+      middlewares:
+        - name: cors
+        - name: auth-headers
+    # GoTrue
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/gotrue`)
+      priority: 10
+      services:
+        - name: appflowy-gotrue
+          port: 9999
+      middlewares:
+        - name: strip-gotrue-prefix
+        - name: cors
+        - name: gotrue-headers
+
+    # WebSocket
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/ws`)
+      priority: 10
+      services:
+        - name: appflowy-cloud
+          port: 8000
+
+    # AppFlowy AI
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/ai`)
+      priority: 10
+      services:
+        - name: appflowy-ai
+          port: 5001
+
+    # Minio Console
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/minio`)
+      priority: 10
+      services:
+        - name: appflowy-minio
+          port: 9001
+      middlewares:
+        - name: cors
+        - name: strip-minio-prefix
+        - name: minio-headers
+
+    # PgAdmin
+    - kind: Rule
+      match: (Host(`appflowy.voidbox.io`) || Host(`appflowy.home.voidbox.io`)) && PathPrefix(`/pgadmin`)
+      priority: 10
+      services:
+        - name: pgadmin4
+          port: 80
+      middlewares:
+        - name: cors
+        - name: strip-pgadmin-prefix
+        - name: pgadmin-headers
+
+---
+# Middlewares for path stripping
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-gotrue-prefix
+  namespace: test
+spec:
+  stripPrefix:
+    prefixes:
+      - /gotrue
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: gotrue-headers
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      X-Script-Name: "/gotrue"
+---
+# Add a new middleware for auth-related headers
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: auth-headers
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      X-Forwarded-Proto: "https"
+    # customResponseHeaders:
+    #   Access-Control-Allow-Origin: "appflowy-flutter://"
+    #   Access-Control-Allow-Methods: "GET, POST, OPTIONS"
+    #   Access-Control-Allow-Headers: "Authorization, Content-Type"
+    #   Access-Control-Allow-Credentials: "true"
+    customResponseHeaders:
+      Access-Control-Allow-Origin: "*"
+      Access-Control-Allow-Methods: "GET, POST, OPTIONS, PUT, DELETE"
+      Access-Control-Allow-Headers: "Authorization, Content-Type, Accept, Client-Version"
+      Access-Control-Allow-Credentials: "true"
+      Access-Control-Expose-Headers: "Location"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-minio-prefix
+  namespace: test
+spec:
+  stripPrefix:
+    prefixes:
+      - /minio
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: minio-headers
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      X-Script-Name: "/minio"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-pgadmin-prefix
+  namespace: test
+spec:
+  stripPrefix:
+    prefixes:
+      - /pgadmin
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: pgadmin-headers
+  namespace: test
+spec:
+  headers:
+    customRequestHeaders:
+      X-Script-Name: "/pgadmin"
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: cors
+  namespace: test
+spec:
+  headers:
+    accessControlAllowMethods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+      - PATCH
+      - OPTIONS
+    accessControlAllowHeaders:
+      - Content-Type
+      - Authorization
+      - Accept
+      - Client-Version
+    accessControlAllowOriginList:
+      - "http://127.0.0.1:8000"
+      - "appflowy-flutter://"
+    accessControlMaxAge: 3600
