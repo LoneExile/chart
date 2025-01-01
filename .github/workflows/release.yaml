@@ -53,8 +53,11 @@ jobs:
       - name: Add Helm repositories
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm repo add bitnami https://charts.bitnami.com/bitnami
 
       - name: Build Helm dependencies
+        env:
+          HELM_EXPERIMENTAL_OCI: "1"
         run: |
           for chart in charts/*; do
             if [ -f "$chart/Chart.yaml" ]; then
