@@ -71,7 +71,8 @@ appflowy_cloud:
   secrets:
     gotrueJwtSecret: "hello456" # Match with gotrue.secrets.jwtSecret
     gotrueJwtExp: "7200" # Match with gotrue.config.jwtExp
-    gotrueExtUrl: "http://localhost" # Match with gotrue.config.apiExternalUrl
+    # FIX:
+    gotrueExtUrl: "https://appflowy.voidbox.io" # Match with gotrue.config.apiExternalUrl
     gotrueAdminEmail: "admin@example.com" # Match with gotrue.config.adminEmail
     gotrueAdminPassword: "password" # Match with gotrue.secrets.adminPassword
     s3AccessKey: "minioadmin" # Default minio access key
@@ -137,7 +138,8 @@ gotrue:
     jwtExp: "7200"
     jwtAdminGroupName: "supabase_admin"
     dbDriver: "postgres"
-    apiExternalUrl: "http://localhost"
+    # FIX:
+    apiExternalUrl: "https://appflowy.voidbox.io"
     port: 9999
     mailerUrlPathsConfirmation: "/verify"
     smtpMaxFrequency: "1ns"
