@@ -6,6 +6,11 @@ minio:
     rootUser: "minioadmin"
     rootPassword: "minioadmin"
   defaultBuckets: "appflowy"
+  extraEnvVars:
+    - name: MINIO_BROWSER_REDIRECT_URL
+      value: "https://appflowy.voidbox.io/minio"
+    - name: MINIO_SERVER_URL
+      value: "https://appflowy.voidbox.io/minio"
 #####################################################
 redis:
   global:
