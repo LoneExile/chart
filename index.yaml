@@ -369,6 +369,27 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/prometheus-stack-0.1.0/prometheus-stack-0.1.0.tgz
     version: 0.1.0
+  reactive-resume:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-01-02T05:18:13.440791998Z"
+    dependencies:
+    - name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.10.3
+    - name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.3.4
+    description: A Helm chart for Reactive-Resume
+    digest: 9006f6db02b398514d14c701e1a14e7275fda8a19a3e42aaaf3e6c9ceaed95ae
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: reactive-resume
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/reactive-resume-0.1.0/reactive-resume-0.1.0.tgz
+    version: 0.1.0
   remark42:
   - apiVersion: v2
     appVersion: v1.14.0
@@ -483,4 +504,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2024-12-30T19:37:17.497278861Z"
+generated: "2025-01-02T05:18:13.840740553Z"
