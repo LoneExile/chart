@@ -191,3 +191,21 @@ ai:
     serverPort: 5001
   secrets:
     openaiApiKey: "test"
+#####################################################
+nginx:
+  image:
+    repository: nginx
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  service:
+    type: ClusterIP
+    port: 80
+  
+  config:
+    appflowyWebOrigin: "https://appflowy.voidbox.io"
+    # appflowyCloudBackend: "http://appflowy_cloud:8000"
+    # gotrueBackend: "http://gotrue:9999"
+    # adminFrontendBackend: "http://admin_frontend:3000"
+    # aiBackend: "http://ai:5001"
+    # minioBackend: "http://minio:9001"
