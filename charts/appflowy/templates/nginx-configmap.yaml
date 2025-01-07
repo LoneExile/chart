@@ -9,7 +9,7 @@ data:
     }
 
     http {
-        resolver 127.0.0.11 valid=10s;
+        resolver rke2-coredns-rke2-coredns.kube-system.svc.cluster.local valid=10s;
 
         map $http_upgrade $connection_upgrade {
            default upgrade;
@@ -33,8 +33,6 @@ data:
             set $gotrue_backend "{{ printf "http://%s-gotrue:9999" .Release.Name }}";
             set $appflowy_ai_backend "{{ printf "http://%s-ai:5001" .Release.Name }}";
             set $minio_backend "{{ printf "http://%s-minio:9000" .Release.Name }}";
-            set $portainer_backend "{{ .Values.nginx.config.portainerBackend }}";
-            set $pgadmin_backend "{{ .Values.nginx.config.pgadminBackend }}";
 
             # Your existing location blocks here
             # (Copy all location blocks from your nginx.conf, removing SSL-related configurations)
