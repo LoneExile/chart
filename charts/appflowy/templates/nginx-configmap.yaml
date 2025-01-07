@@ -33,6 +33,8 @@ data:
             set $gotrue_backend "{{ printf "http://%s-gotrue:9999" .Release.Name }}";
             set $appflowy_ai_backend "{{ printf "http://%s-ai:5001" .Release.Name }}";
             set $minio_backend "{{ printf "http://%s-minio:9000" .Release.Name }}";
+            set $portainer_backend "{{ .Values.nginx.config.portainerBackend }}";
+            set $pgadmin_backend "{{ .Values.nginx.config.pgadminBackend }}";
 
             # Your existing location blocks here
             # (Copy all location blocks from your nginx.conf, removing SSL-related configurations)
@@ -175,32 +177,32 @@ data:
             chunked_transfer_encoding off;
         }
 
-        # PgAdmin
-        # Optional Module, comment this section if you are did not deploy pgadmin in docker-compose.yml
-        location /pgadmin/ {
-            set $pgadmin pgadmin;
-            proxy_pass $pgadmin_backend;
+        # # PgAdmin
+        # # Optional Module, comment this section if you are did not deploy pgadmin in docker-compose.yml
+        # location /pgadmin/ {
+        #     set $pgadmin pgadmin;
+        #     proxy_pass $pgadmin_backend;
 
-            proxy_set_header X-Script-Name /pgadmin;
-            proxy_set_header X-Scheme $scheme;
-            proxy_set_header Host $host;
-            proxy_redirect off;
-        }
+        #     proxy_set_header X-Script-Name /pgadmin;
+        #     proxy_set_header X-Scheme $scheme;
+        #     proxy_set_header Host $host;
+        #     proxy_redirect off;
+        # }
 
-        # Portainer
-        # Optional Module, comment this section if you are did not deploy portainer in docker-compose.yml
-        location /portainer/ {
-            proxy_pass $portainer_backend;
-            rewrite ^/portainer/(.*) /$1 break;
-        }
+        # # Portainer
+        # # Optional Module, comment this section if you are did not deploy portainer in docker-compose.yml
+        # location /portainer/ {
+        #     proxy_pass $portainer_backend;
+        #     rewrite ^/portainer/(.*) /$1 break;
+        # }
 
-        # Admin Frontend
-        # Optional Module, comment this section if you are did not deploy admin_frontend in docker-compose.yml
-        location / {
-            proxy_pass $admin_frontend_backend;
+        # # Admin Frontend
+        # # Optional Module, comment this section if you are did not deploy admin_frontend in docker-compose.yml
+        # location / {
+        #     proxy_pass $admin_frontend_backend;
 
-            proxy_set_header X-Scheme $scheme;
-            proxy_set_header Host $host;
-        }
+        #     proxy_set_header X-Scheme $scheme;
+        #     proxy_set_header Host $host;
+        # }
     }
     }
