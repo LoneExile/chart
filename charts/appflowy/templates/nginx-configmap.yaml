@@ -28,7 +28,7 @@ data:
             client_max_body_size 10M;
 
             underscores_in_headers on;
-            set $appflowy_web_origin "{{ .Values.nginx.config.appflowyWebOrigin }}";
+            set $appflowy_web_origin "{{ printf "http://%s-gotrue:9999" .Release.Name }}";
             set $appflowy_cloud_backend "{{ printf "http://%s-cloud:8000" .Release.Name }}";
             set $gotrue_backend "{{ printf "http://%s-gotrue:9999" .Release.Name }}";
             set $appflowy_ai_backend "{{ printf "http://%s-ai:5001" .Release.Name }}";
