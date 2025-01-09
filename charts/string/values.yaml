@@ -1,0 +1,14 @@
+replicaCount: 1
+
+image:
+  repository: daveperrett/string-is
+  tag: "v1.37.6"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 3000
+  targetPort: 3000
+
+labels:
+  app: string

@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pdf-deployment
+  labels:
+    app: pdf
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: pdf
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: pdf
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+        - name: pdf
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+          - name: SECURITY_ENABLE_LOGIN
+            value: {{ .Values.environment.SECURITY_ENABLE_LOGIN }}
+          - name: DOCKER_ENABLE_SECURITY 
+            value: {{ .Values.environment.DOCKER_ENABLE_SECURITY }}
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - mountPath: {{ .Values.persistence.mountPath }}
+              name: pdf-volume-nfs
+              subPath: {{ .Values.persistence.subPath }}
+
+      volumes:
+        - name: pdf-volume-nfs
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}
