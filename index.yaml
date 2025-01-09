@@ -364,6 +364,19 @@ entries:
   pdf-service:
   - apiVersion: v2
     appVersion: 0.36.6
+    created: "2025-01-09T10:32:47.015156078Z"
+    description: A Helm chart for PDF service
+    digest: 5cf30725c06ae3c5581bc5091b4d317430a2b350a15136d78aaad1f045d30223
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: pdf-service
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/pdf-service-0.1.1/pdf-service-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.36.6
     created: "2025-01-09T09:04:59.177407245Z"
     description: A Helm chart for PDF service
     digest: f61605d335efb2560e28cb1022377ef4cb56066360f18dbb72fc9bd05932dd3f
@@ -588,4 +601,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-09T09:05:00.036730257Z"
+generated: "2025-01-09T10:32:48.554576422Z"
