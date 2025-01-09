@@ -25,9 +25,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
           - name: SECURITY_ENABLE_LOGIN
-            value: {{ .Values.environment.SECURITY_ENABLE_LOGIN }}
+            value: "{{ .Values.environment.SECURITY_ENABLE_LOGIN }}"
           - name: DOCKER_ENABLE_SECURITY 
-            value: {{ .Values.environment.DOCKER_ENABLE_SECURITY }}
+            value: "{{ .Values.environment.DOCKER_ENABLE_SECURITY }}"
           ports:
             - containerPort: 8080
           volumeMounts:
