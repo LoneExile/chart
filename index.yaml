@@ -206,6 +206,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/jellyfin-0.1.0/jellyfin-0.1.0.tgz
     version: 0.1.0
+  jellyseerr:
+  - apiVersion: v2
+    appVersion: 2.2.3
+    created: "2025-01-09T09:04:58.439089125Z"
+    description: A Helm chart for Jellyseerr
+    digest: d435cc6e032a4edaae8e69bb225d583c71eda7d1d1aeb04f7753e3078d154ffa
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: jellyseerr
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/jellyseerr-0.1.0/jellyseerr-0.1.0.tgz
+    version: 0.1.0
   jenkins:
   - apiVersion: v2
     appVersion: 2.491-alpine-jdk21
@@ -305,6 +319,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/listmonk-handle-0.1.0/listmonk-handle-0.1.0.tgz
     version: 0.1.0
+  livebook:
+  - apiVersion: v2
+    appVersion: 0.14.5
+    created: "2025-01-09T09:04:58.88160576Z"
+    description: A Helm chart for Livebook
+    digest: 5686b39bfe4c0a8b94386962fb4a4171e23f0522571c3509d82bc67c87d630da
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: livebook
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/livebook-0.1.0/livebook-0.1.0.tgz
+    version: 0.1.0
   memos:
   - apiVersion: v2
     created: "2024-12-11T09:41:26.541494238Z"
@@ -318,6 +346,34 @@ entries:
     type: application
     urls:
     - https://github.com/LoneExile/chart/releases/download/memos-0.1.0/memos-0.1.0.tgz
+    version: 0.1.0
+  morphos:
+  - apiVersion: v2
+    appVersion: 0.6.0
+    created: "2025-01-09T09:04:59.098686301Z"
+    description: Morphos application Helm chart
+    digest: 0663ea39f04907e83b3d519a2548c960e69c77134a25c65ab7b36f1e9803abe0
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: morphos
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/morphos-0.1.0/morphos-0.1.0.tgz
+    version: 0.1.0
+  pdf-service:
+  - apiVersion: v2
+    appVersion: 0.36.6
+    created: "2025-01-09T09:04:59.177407245Z"
+    description: A Helm chart for PDF service
+    digest: f61605d335efb2560e28cb1022377ef4cb56066360f18dbb72fc9bd05932dd3f
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: pdf-service
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/pdf-service-0.1.0/pdf-service-0.1.0.tgz
     version: 0.1.0
   prometheus-stack:
   - apiVersion: v2
@@ -368,6 +424,20 @@ entries:
     name: prometheus-stack
     urls:
     - https://github.com/LoneExile/chart/releases/download/prometheus-stack-0.1.0/prometheus-stack-0.1.0.tgz
+    version: 0.1.0
+  prowlarr:
+  - apiVersion: v2
+    appVersion: 1.29.2
+    created: "2025-01-09T09:04:59.384934482Z"
+    description: A Helm chart for Prowlarr
+    digest: 84d42fa302dd48f6caba5f8a8e8ceee414467620850aa824aca7f072a6b8f02c
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: prowlarr
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/prowlarr-0.1.0/prowlarr-0.1.0.tgz
     version: 0.1.0
   reactive-resume:
   - apiVersion: v2
@@ -446,6 +516,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/sonarqube-0.1.0/sonarqube-0.1.0.tgz
     version: 0.1.0
+  string-service:
+  - apiVersion: v2
+    appVersion: 1.37.6
+    created: "2025-01-09T09:04:59.811280166Z"
+    description: A Helm chart for string-is service
+    digest: 5780dabd9b0340da2ee3440faa6fd7e9a85bce5072034c42bbaaa04992eacc49
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: string-service
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/string-service-0.1.0/string-service-0.1.0.tgz
+    version: 0.1.0
   syncthing:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -504,4 +588,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-02T05:18:13.840740553Z"
+generated: "2025-01-09T09:05:00.036730257Z"
