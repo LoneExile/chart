@@ -1,0 +1,38 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/livebook-dev/livebook
+  tag: "0.14.5"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  ports:
+    - port: 8080
+      targetPort: 8080
+      protocol: TCP
+      name: livebook-1
+    - port: 8081
+      targetPort: 8081
+      protocol: TCP
+      name: livebook-2
+
+env:
+  PGID: "1000"
+  PUID: "1000"
+  LIVEBOOK_PASSWORD: "securesecret"
+
+persistence:
+  enabled: true
+  existingClaim: your-claim-name
+  mountPath: /data
+  subPath: config/livebook/data
+
+resources: {}
+  # Optional: Add resource constraints
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi

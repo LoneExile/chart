@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: fallenbagel/jellyseerr
+  tag: "2.2.3"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5055
+  targetPort: 5055
+
+env:
+  TZ: "Etc/UTC"
+  LOG_LEVEL: "debug"
+
+persistence:
+  enabled: true
+  existingClaim: your-claim-name
+  mountPath: /app/config
+  subPath: config/jellyseerr/config
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
