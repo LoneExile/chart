@@ -14,7 +14,7 @@ persistence:
   # storageClassName: ""
   # accessMode: ReadWriteMany
   # size: 10Gi
-  existingClaim: nfs-pvc-worker-1
+  existingClaim: your-claim-name
 
 env:
   TZ: "Etc/UTC"
