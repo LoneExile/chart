@@ -452,6 +452,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/prowlarr-0.1.0/prowlarr-0.1.0.tgz
     version: 0.1.0
+  radarr:
+  - apiVersion: v2
+    appVersion: 5.17.2
+    created: "2025-01-10T10:23:04.477047826Z"
+    description: A Helm chart for Radarr
+    digest: 39026fa16d3b8f93320c7096339445798ef8f3f261dbf2aaa6e56e790217b070
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: radarr
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/radarr-0.1.0/radarr-0.1.0.tgz
+    version: 0.1.0
   reactive-resume:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -529,6 +543,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/sonarqube-0.1.0/sonarqube-0.1.0.tgz
     version: 0.1.0
+  sonarr:
+  - apiVersion: v2
+    appVersion: 4.0.12
+    created: "2025-01-10T10:23:04.91583275Z"
+    description: A Helm chart for Sonarr
+    digest: 0bb5d28e2f13afd23855c14407b67067a45e8b550223214413e56aec6e7c480b
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: sonarr
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/sonarr-0.1.0/sonarr-0.1.0.tgz
+    version: 0.1.0
   string-service:
   - apiVersion: v2
     appVersion: 1.37.6
@@ -601,4 +629,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-09T10:32:48.554576422Z"
+generated: "2025-01-10T10:23:05.226632693Z"
