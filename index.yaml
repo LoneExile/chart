@@ -455,6 +455,19 @@ entries:
   radarr:
   - apiVersion: v2
     appVersion: 5.17.2
+    created: "2025-01-10T10:24:41.094266808Z"
+    description: A Helm chart for Radarr
+    digest: 9b56fbe58e02576b58b6274b5970ba1ce5380553f9b7b313540538ba734f0be7
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: radarr
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/radarr-0.1.1/radarr-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 5.17.2
     created: "2025-01-10T10:23:04.477047826Z"
     description: A Helm chart for Radarr
     digest: 39026fa16d3b8f93320c7096339445798ef8f3f261dbf2aaa6e56e790217b070
@@ -629,4 +642,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-10T10:23:05.226632693Z"
+generated: "2025-01-10T10:24:42.17172191Z"
