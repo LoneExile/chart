@@ -1,0 +1,41 @@
+replicaCount: 1
+
+image:
+  repository: lscr.io/linuxserver/radarr
+  tag: "5.17.2"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 7878
+
+persistence:
+  enabled: true
+  # storageClassName: ""
+  # accessMode: ReadWriteMany
+  # size: 10Gi
+  existingClaim: nfs-pvc-worker-1
+
+env:
+  TZ: "Etc/UTC"
+  PUID: "1000"
+  PGID: "1000"
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+volumeMounts:
+  config:
+    mountPath: /config
+    subPath: config/radarr/config
+  movies:
+    mountPath: /movie
+    subPath: home/radarr/movie
+  downloads:
+    mountPath: /downloads
+    subPath: home/radarr/downloads
