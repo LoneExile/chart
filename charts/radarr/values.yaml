@@ -1,8 +1,8 @@
 replicaCount: 1
 
 image:
-  repository: lscr.io/linuxserver/radarr
-  tag: "5.17.2"
+  repository: hotio/radarr
+  tag: "release-5.17.2.9580"
   pullPolicy: IfNotPresent
 
 service:
@@ -20,6 +20,7 @@ env:
   TZ: "Etc/UTC"
   PUID: "1000"
   PGID: "1000"
+  UMASK: "002"
 
 resources: {}
   # limits:

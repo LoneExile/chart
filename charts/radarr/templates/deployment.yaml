@@ -29,6 +29,8 @@ spec:
               value: {{ .Values.env.PUID | quote }}
             - name: PGID
               value: {{ .Values.env.PGID | quote }}
+            - name: UMASK
+              value: {{ .Values.env.UMASK | quote }}
           volumeMounts:
             - name: config
               mountPath: {{ .Values.volumeMounts.config.mountPath }}
