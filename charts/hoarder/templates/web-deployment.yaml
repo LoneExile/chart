@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hoarder-web
+  template:
+    metadata:
+      labels:
+        app: hoarder-web
+    spec:
+      containers:
+      - name: web
+        image: {{ .Values.web.image.repository }}:{{ .Values.web.image.tag }}
+        env:
+        - name: MEILI_ADDR
+          value: http://{{ .Release.Name }}-meilisearch:{{ .Values.meilisearch.service.port }}
+        - name: BROWSER_WEB_URL
+          value: http://{{ .Release.Name }}-chrome:{{ .Values.chrome.service.port }}
+        - name: DATA_DIR
+          value: /data
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-env
+        ports:
+        - containerPort: 3000
+        volumeMounts:
+        - mountPath: /data
+          name: data
+          subPath: {{ .Values.web.persistence.subPath }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.web.persistence.claimName }}

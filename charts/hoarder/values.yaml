@@ -1,0 +1,76 @@
+# Environment configuration
+env:
+  HOARDER_VERSION: release
+  MEILI_MASTER_KEY: generated_secret
+  NEXT_PUBLIC_SECRET: "my-super-duper-secret-string"
+  NEXTAUTH_SECRET: generated_secret
+  NEXTAUTH_URL: http://localhost:3000
+
+  # If enabled, no new signups will be allowed
+  DISABLE_SIGNUPS: "false"
+  # If enabled, only OAuth signups and logins are allowed
+  DISABLE_PASSWORD_AUTH: "false"
+  # The "wellknown Url" for openid-configuration
+  OAUTH_WELLKNOWN_URL: ""
+  # The "Client Secret" from OAuth provider
+  OAUTH_CLIENT_SECRET: ""
+  # The "Client ID" from OAuth provider
+  OAUTH_CLIENT_ID: ""
+  # Full list of scopes to request (space delimited)
+  OAUTH_SCOPE: "openid email profile"
+  # The name of your provider shown on signup page
+  OAUTH_PROVIDER_NAME: "Custom Provider"
+  # Enable automatic account linking with OAuth
+  OAUTH_ALLOW_DANGEROUS_EMAIL_ACCOUNT_LINKING: "false"
+
+  # OpenAI API key for automatic tagging
+  OPENAI_API_KEY: ""
+  # Base URL for OpenAI API (only needed for alternative OpenAI-compatible APIs like Azure)
+  OPENAI_BASE_URL: ""
+  # Base URL for Ollama API for local inference
+  OLLAMA_BASE_URL: ""
+  # How long the Ollama model stays loaded in memory (e.g. "5m")
+  OLLAMA_KEEP_ALIVE: ""
+  # Model to use for text inference
+  INFERENCE_TEXT_MODEL: "gpt-4o-mini"
+  # Model to use for image inference (must support vision APIs if using Ollama)
+  INFERENCE_IMAGE_MODEL: "gpt-4o-mini"
+  # Model to use for generating text embeddings
+  EMBEDDING_TEXT_MODEL: "text-embedding-3-small"
+  # Maximum number of tokens for inference model input
+  INFERENCE_CONTEXT_LENGTH: "2048"
+  # Language for generated tags
+  INFERENCE_LANG: "english"
+  # Timeout in seconds for inference jobs
+  INFERENCE_JOB_TIMEOUT_SEC: "30"
+
+# Chrome service configuration
+chrome:
+  image: 
+    repository: gcr.io/zenika-hub/alpine-chrome
+    tag: "123"
+  service:
+    port: 9222
+
+# Meilisearch configuration
+meilisearch:
+  image:
+    repository: getmeili/meilisearch
+    tag: v1.11.1
+  service:
+    port: 7700
+  persistence:
+    claimName: meilisearch-pvc
+    subPath: "config/hoarder/meili_data"
+
+# Web service configuration
+web:
+  image:
+    repository: ghcr.io/hoarder-app/hoarder
+    tag: release
+  service:
+    type: LoadBalancer
+    port: 3000
+  persistence:
+    claimName: web-pvc
+    subPath: "config/hoarder/data"
