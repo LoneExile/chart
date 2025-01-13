@@ -1,8 +1,8 @@
 apiVersion: v2
 name: reactive-resume
 description: A Helm chart for Reactive-Resume
-version: 0.1.1
-appVersion: "4.3.1"
+version: 0.1.2
+appVersion: "4.3.7"
 dependencies:
   - name: minio
     version: 14.10.3
