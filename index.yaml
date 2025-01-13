@@ -140,6 +140,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/filebrowser-0.1.0/filebrowser-0.1.0.tgz
     version: 0.1.0
+  hoarder:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-01-13T16:19:58.469991886Z"
+    description: A Helm chart for Hoarder application
+    digest: dfa477aaf2c4cc3241fb4c3db5182977aa9fea659bb4f3a4626ae36657132067
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: hoarder
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/hoarder-0.1.0/hoarder-0.1.0.tgz
+    version: 0.1.0
   jellyfin:
   - apiVersion: v2
     appVersion: 10.10.3
@@ -688,4 +702,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-12T12:53:52.325179271Z"
+generated: "2025-01-13T16:20:00.593144813Z"
