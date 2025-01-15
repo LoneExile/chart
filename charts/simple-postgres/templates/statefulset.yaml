@@ -5,15 +5,15 @@ metadata:
   labels:
     {{- include "postgresql.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: {{ .Values.postgresql.replicaCount }}
   selector:
     matchLabels:
-      app: postgresql
-  serviceName: postgresql
+      app: {{ .Release.Name }}-postgresql
+  serviceName: {{ .Release.Name }}-postgresql
   template:
     metadata:
       labels:
-        app: postgresql
+        app: {{ .Release.Name }}-postgresql
     spec:
       containers:
       - name: postgresql
