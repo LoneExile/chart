@@ -29,3 +29,8 @@ persistence:
   mountPaths:
     - path: /var/lib/postgresql/data
       subPath: config/somename/db/data
+
+initdb:
+  scripts: []
+    # create-extensions.sql: |
+    #   CREATE EXTENSION vectors;

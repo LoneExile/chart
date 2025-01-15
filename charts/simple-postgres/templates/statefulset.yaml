@@ -50,7 +50,16 @@ spec:
             subPath: {{ .subPath }}
             {{- end }}
           {{- end }}
+          {{- if .Values.initdb.scripts }}
+          - name: init-scripts
+            mountPath: /docker-entrypoint-initdb.d
+          {{- end }}
       volumes:
       - name: postgres-storage
         persistentVolumeClaim:
           claimName: {{ .Values.persistence.claimName }}
+      {{- if .Values.initdb.scripts }}
+      - name: init-scripts
+        configMap:
+          name: {{ .Release.Name }}-init-scripts
+      {{- end }}
