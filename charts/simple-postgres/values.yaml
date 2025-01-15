@@ -1,4 +1,5 @@
 postgresql:
+  replicaCount: 1
   image:
     repository: postgres
     tag: 16.6
@@ -9,10 +10,10 @@ postgresql:
   service:
     port: 5432
     targetPort: 5432
-  
+
   credentials:
-    username: "admin"
-    password: "admin"
+    username: "postgres"
+    password: "postgres"
     database: "postgres"
   
   resources: {}
