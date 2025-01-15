@@ -625,6 +625,21 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
+  simple-postgres:
+  - apiVersion: v2
+    appVersion: "16.6"
+    created: "2025-01-15T10:32:32.469358024Z"
+    description: A Helm chart for simple-postgresql
+    digest: d97e02de0c67d118a4621b9e2797e5f352caa7158d61fba98719f66f9831ea8e
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: simple-postgres
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/simple-postgres-0.1.0/simple-postgres-0.1.0.tgz
+    version: 0.1.0
   sonarqube:
   - apiVersion: v2
     appVersion: 10.7.0
@@ -738,4 +753,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-14T11:01:15.503927644Z"
+generated: "2025-01-15T10:32:33.023707481Z"
