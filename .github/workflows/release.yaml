@@ -52,6 +52,7 @@ jobs:
         run: |
           helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add le https://loneexile.github.io/chart
 
       - name: Build Helm dependencies
         env:
