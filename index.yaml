@@ -154,6 +154,29 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/hoarder-0.1.0/hoarder-0.1.0.tgz
     version: 0.1.0
+  immich:
+  - apiVersion: v2
+    appVersion: v1.119.0
+    created: "2025-01-16T08:00:31.845786867Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.6.3
+    - condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.5
+    description: Immich Helm Chart
+    digest: cc0a6b45b31ccd585fd0dc7194ff9eb0f796a31c8cbe142c8e0f2d0dd6b34b39
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: immich
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/immich-0.1.0/immich-0.1.0.tgz
+    version: 0.1.0
   jellyfin:
   - apiVersion: v2
     appVersion: 10.10.3
@@ -823,4 +846,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-16T06:24:18.618199791Z"
+generated: "2025-01-16T08:00:34.024331983Z"
