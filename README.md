@@ -2,6 +2,9 @@
 
 Self-hosted helm chart
 
+> [!CAUTION]
+> This is a work in progress. only use it if you know what you are doing.
+
 ## Prerequisites
 
 - [helm](https://helm.sh/docs/intro/install/)
