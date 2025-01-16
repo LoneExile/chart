@@ -17,6 +17,14 @@ defaults:
 redis:
   enabled: true
   hostname: &redisHost "{{ .Release.Name }}-redis-master"
+  # master:
+  #   persistence:
+  #     subPath: "config/immich/redis/data/"
+  #     existingClaim: ""
+  # replica:
+  #   persistence:
+  #     subPath: "config/immich/redis-replica/data/"
+  #     existingClaim: ""
 
 machinelearning:
   enabled: true
@@ -49,7 +57,7 @@ server:
   replicaCount: *defaultReplicaCount
   image:
     repository: ghcr.io/immich-app/immich-server
-    tag: "{{ .Values.global.imageTag }}"
+    tag: *imageTag
     pullPolicy: *defaultPullPolicy
   service:
     type: *defaultServiceType
