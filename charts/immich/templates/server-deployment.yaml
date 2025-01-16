@@ -42,6 +42,9 @@ spec:
             {{- if .Values.server.persistence.library.enabled }}
             - name: library
               mountPath: /usr/src/app/upload
+              {{- if .Values.server.persistence.library.subPath }}
+              subPath: {{ .Values.server.persistence.library.subPath }}
+              {{- end }}
             {{- end }}
           livenessProbe:
             failureThreshold: 3

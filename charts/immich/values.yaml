@@ -32,10 +32,10 @@ machinelearning:
   url: &mlUrl "http://{{ .Release.Name }}-machine-learning:3003"
 
 commonEnv: &commonEnv
-  DB_DATABASE_NAME: "{{ .Values.global.database.name }}"
   DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
-  DB_USERNAME: "{{ .Values.global.database.username }}"
-  DB_PASSWORD: "{{ .Values.global.database.password }}"
+  DB_DATABASE_NAME: *dbName
+  DB_USERNAME: *dbUser
+  DB_PASSWORD: *dbPass
   REDIS_HOSTNAME: *redisHost
   IMMICH_MACHINE_LEARNING_URL: *mlUrl
 
@@ -69,6 +69,7 @@ server:
     library:
       enabled: true
       existingClaim: nfs-client-1
+      subPath: "config/immich/app/"
 
 simple-postgres:
   enabled: true
@@ -88,7 +89,7 @@ simple-postgres:
     claimName: nfs-client-1
     mountPaths:
       - path: /var/lib/postgresql/data
-        subPath: config/immich_app/db/data
+        subPath: config/immich/db/data
 
   initdb:
     scripts:
