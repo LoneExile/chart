@@ -628,6 +628,20 @@ entries:
   simple-postgres:
   - apiVersion: v2
     appVersion: "16.6"
+    created: "2025-01-16T06:24:18.097663904Z"
+    description: A Helm chart for simple-postgresql
+    digest: 958b72a6c1e9058206bcaab5a58512c90f3e3012a9739a8760203a3a7e7b9e07
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: simple-postgres
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/simple-postgres-0.1.5/simple-postgres-0.1.5.tgz
+    version: 0.1.5
+  - apiVersion: v2
+    appVersion: "16.6"
     created: "2025-01-15T16:13:49.895480407Z"
     description: A Helm chart for simple-postgresql
     digest: d816cfb3e11f7e330f71cb8422e0ee66def0ac00017ac80358f450c7c3a1d0a4
@@ -809,4 +823,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-15T16:13:50.475827736Z"
+generated: "2025-01-16T06:24:18.618199791Z"
