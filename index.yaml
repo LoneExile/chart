@@ -157,6 +157,28 @@ entries:
   immich:
   - apiVersion: v2
     appVersion: v1.119.0
+    created: "2025-01-16T08:45:58.095973351Z"
+    dependencies:
+    - condition: redis.enabled
+      name: redis
+      repository: https://charts.bitnami.com/bitnami
+      version: 20.6.3
+    - condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.5
+    description: Immich Helm Chart
+    digest: 19c4db71676ede86fcc4e44384d218f1e26ba85723b0adcaa52553ed0ba06cae
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: immich
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/immich-0.1.1/immich-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: v1.119.0
     created: "2025-01-16T08:00:31.845786867Z"
     dependencies:
     - condition: redis.enabled
@@ -846,4 +868,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-16T08:00:34.024331983Z"
+generated: "2025-01-16T08:46:00.467339765Z"
