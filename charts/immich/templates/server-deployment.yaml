@@ -1,0 +1,76 @@
+{{- if .Values.server.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-server
+  labels:
+    app.kubernetes.io/name: server
+    {{- include "immich.labels" . | nindent 4 }}
+spec:
+  revisionHistoryLimit: 3
+  replicas: {{ .Values.server.replicaCount }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: server
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: server
+        app.kubernetes.io/instance: {{ .Release.Name }}
+    spec:
+      serviceAccountName: default
+      automountServiceAccountToken: true
+      dnsPolicy: ClusterFirst
+      enableServiceLinks: true
+      containers:
+        - name: {{ .Release.Name }}-server
+          image: {{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}
+          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          env:
+            {{- range $key, $value := .Values.server.env }}
+            - name: {{ $key }}
+              value: {{ $value | quote }}
+            {{- end }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.server.service.port }}
+              protocol: TCP
+          volumeMounts:
+            {{- if .Values.server.persistence.library.enabled }}
+            - name: library
+              mountPath: /usr/src/app/upload
+            {{- end }}
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/server/ping
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /api/server/ping
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            httpGet:
+              path: /api/server/ping
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 1
+      volumes:
+        {{- if .Values.server.persistence.library.enabled }}
+        - name: library
+          persistentVolumeClaim:
+            claimName: {{ .Values.server.persistence.library.existingClaim }}
+        {{- end }}
+{{- end }}

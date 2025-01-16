@@ -1,0 +1,89 @@
+global:
+  imageTag: &imageTag v1.119.0
+  database:
+    name: &dbName postgres
+    username: &dbUser postgres
+    password: &dbPass postgres
+
+
+defaults:
+  enabled: &defaultEnabled true
+  replicaCount: &defaultReplicaCount 1
+  image:
+    pullPolicy: &defaultPullPolicy IfNotPresent
+  service:
+    type: &defaultServiceType ClusterIP
+
+redis:
+  enabled: true
+  hostname: &redisHost "{{ .Release.Name }}-redis-master"
+
+machinelearning:
+  enabled: true
+  url: &mlUrl "http://{{ .Release.Name }}-machine-learning:3003"
+
+commonEnv: &commonEnv
+  DB_DATABASE_NAME: "{{ .Values.global.database.name }}"
+  DB_HOSTNAME: "{{ .Release.Name }}-postgresql"
+  DB_USERNAME: "{{ .Values.global.database.username }}"
+  DB_PASSWORD: "{{ .Values.global.database.password }}"
+  REDIS_HOSTNAME: *redisHost
+  IMMICH_MACHINE_LEARNING_URL: *mlUrl
+
+machineLearning:
+  enabled: *defaultEnabled
+  replicaCount: *defaultReplicaCount
+  image:
+    repository: ghcr.io/immich-app/immich-machine-learning
+    tag: *imageTag
+    pullPolicy: *defaultPullPolicy
+  service:
+    type: *defaultServiceType
+    port: 3003
+  env:
+    <<: *commonEnv
+    TRANSFORMERS_CACHE: /cache
+
+server:
+  enabled: *defaultEnabled
+  replicaCount: *defaultReplicaCount
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    tag: "{{ .Values.global.imageTag }}"
+    pullPolicy: *defaultPullPolicy
+  service:
+    type: *defaultServiceType
+    port: 2283
+  env:
+    <<: *commonEnv
+  persistence:
+    library:
+      enabled: true
+      existingClaim: nfs-client-1
+
+simple-postgres:
+  enabled: true
+  postgresql:
+    image:
+      repository: tensorchord/pgvecto-rs
+      tag: pg14-v0.2.0
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: *dbUser
+      password: *dbPass
+      database: *dbName
+
+  persistence:
+    pgdata: "/var/lib/postgresql/data/"
+    claimName: nfs-client-1
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        subPath: config/immich_app/db/data
+
+  initdb:
+    scripts:
+      "create-extensions.sql": |-
+        CREATE EXTENSION cube;
+        CREATE EXTENSION earthdistance;
+        CREATE EXTENSION vectors;
