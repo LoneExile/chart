@@ -1,5 +1,28 @@
 apiVersion: v1
 entries:
+  affine:
+  - apiVersion: v2
+    appVersion: stable
+    created: "2025-01-17T07:27:24.511350353Z"
+    dependencies:
+    - condition: simple-redis.enabled
+      name: simple-redis
+      repository: https://loneexile.github.io/chart
+      version: 0.1.1
+    - condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.5
+    description: A Helm chart for AFFiNE
+    digest: 7e9efa1e80867a6e9f3455eaa402e38bfc52fb40488010a07386c6bcf01f0185
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: affine
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/affine-0.1.0/affine-0.1.0.tgz
+    version: 0.1.0
   aria-chart:
   - apiVersion: v2
     appVersion: latest
@@ -722,6 +745,20 @@ entries:
   simple-postgres:
   - apiVersion: v2
     appVersion: "16.6"
+    created: "2025-01-17T07:27:28.733885017Z"
+    description: A Helm chart for simple-postgresql
+    digest: cc61753d2bf67fea2c4ba5f4a8c54d7edde98ad5291b013b489b2face9ca8090
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: simple-postgres
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/simple-postgres-0.1.6/simple-postgres-0.1.6.tgz
+    version: 0.1.6
+  - apiVersion: v2
+    appVersion: "16.6"
     created: "2025-01-16T06:24:18.097663904Z"
     description: A Helm chart for simple-postgresql
     digest: 958b72a6c1e9058206bcaab5a58512c90f3e3012a9739a8760203a3a7e7b9e07
@@ -931,4 +968,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T04:42:18.372495097Z"
+generated: "2025-01-17T07:27:29.760040063Z"
