@@ -2,7 +2,7 @@ affine:
   replicaCount: 1
   image:
     repository: ghcr.io/toeverything/affine-graphql
-    tag: stable
+    tag: "stable-c5da8dd"
     pullPolicy: IfNotPresent
 
   storage:
