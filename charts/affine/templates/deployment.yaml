@@ -19,10 +19,10 @@ spec:
           image: "{{ .Values.affine.image.repository }}:{{ .Values.affine.image.tag }}"
           command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
           env:
-            - name: REDIS_SERVER_HOST
-              value: {{ .Values.affine.env.REDIS_SERVER_HOST }}
-            - name: DATABASE_URL
-              value: {{ .Values.affine.env.DATABASE_URL }}
+            {{- range .Values.affine.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
           volumeMounts:
             - name: affine-storage
               mountPath: {{ .Values.affine.storage.uploadLocation }}
@@ -43,10 +43,10 @@ spec:
               containerPort: 3010
               protocol: TCP
           env:
-            - name: REDIS_SERVER_HOST
-              value: {{ .Values.affine.env.REDIS_SERVER_HOST }}
-            - name: DATABASE_URL
-              value: {{ .Values.affine.env.DATABASE_URL }}
+            {{- range .Values.affine.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
           volumeMounts:
             - name: affine-storage
               mountPath: {{ .Values.affine.storage.uploadLocation }}
