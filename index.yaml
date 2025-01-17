@@ -231,6 +231,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/cloudflared-0.1.0/cloudflared-0.1.0.tgz
     version: 0.1.0
+  cyberchef:
+  - apiVersion: v2
+    appVersion: 10.19.4
+    created: "2025-01-17T09:51:43.231688457Z"
+    description: A Helm chart for CyberChef web application
+    digest: 67f426a520bf4d7e2b94eb739bfac1f0346d8cbbbbc6fe5e9066f19166882350
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: cyberchef
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/cyberchef-0.1.0/cyberchef-0.1.0.tgz
+    version: 0.1.0
   dashy:
   - apiVersion: v2
     appVersion: 3.x
@@ -1078,4 +1092,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T08:22:41.285408067Z"
+generated: "2025-01-17T09:51:47.300089091Z"
