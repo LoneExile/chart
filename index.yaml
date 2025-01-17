@@ -676,6 +676,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/reactive-resume-0.1.0/reactive-resume-0.1.0.tgz
     version: 0.1.0
+  redis:
+  - apiVersion: v2
+    appVersion: 7.4.2
+    created: "2025-01-17T03:52:17.430618526Z"
+    description: A Helm chart for Redis
+    digest: 2df272d15d0a4bc7d1c72f46163380427adfe54811c7cc7b09e379b265348179
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: redis
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/redis-0.1.0/redis-0.1.0.tgz
+    version: 0.1.0
   remark42:
   - apiVersion: v2
     appVersion: v1.14.0
@@ -903,4 +917,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T03:25:45.538260207Z"
+generated: "2025-01-17T03:52:18.109265847Z"
