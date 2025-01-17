@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "affine.fullname" . }}
+  labels:
+    {{- include "affine.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.affine.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "affine.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "affine.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: {{ .Chart.Name }}-migration
+          image: "{{ .Values.affine.image.repository }}:{{ .Values.affine.image.tag }}"
+          command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
+          env:
+            - name: REDIS_SERVER_HOST
+              value: {{ .Values.affine.env.REDIS_SERVER_HOST }}
+            - name: DATABASE_URL
+              value: {{ .Values.affine.env.DATABASE_URL }}
+          volumeMounts:
+            - name: upload-storage
+              mountPath: {{ .Values.affine.storage.uploadLocation }}
+              {{- if .Values.affine.storage.uploadSubPath }}
+              subPath: {{ .Values.affine.storage.uploadSubPath }}
+              {{- end }}
+            - name: config-storage
+              mountPath: {{ .Values.affine.storage.configLocation }}
+              {{- if .Values.affine.storage.configSubPath }}
+              subPath: {{ .Values.affine.storage.configSubPath }}
+              {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.affine.image.repository }}:{{ .Values.affine.image.tag }}"
+          imagePullPolicy: {{ .Values.affine.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3010
+              protocol: TCP
+          env:
+            - name: REDIS_SERVER_HOST
+              value: {{ .Values.affine.env.REDIS_SERVER_HOST }}
+            - name: DATABASE_URL
+              value: {{ .Values.affine.env.DATABASE_URL }}
+          volumeMounts:
+            - name: upload-storage
+              mountPath: {{ .Values.affine.storage.uploadLocation }}
+              {{- if .Values.affine.storage.uploadSubPath }}
+              subPath: {{ .Values.affine.storage.uploadSubPath }}
+              {{- end }}
+            - name: config-storage
+              mountPath: {{ .Values.affine.storage.configLocation }}
+              {{- if .Values.affine.storage.configSubPath }}
+              subPath: {{ .Values.affine.storage.configSubPath }}
+              {{- end }}
+          {{ if .Values.affine.resources }}
+          resources:
+            {{- toYaml .Values.affine.resources | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: upload-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.affine.volumes.persistentVolumeClaim.claimName }}

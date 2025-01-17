@@ -1,0 +1,15 @@
+{{- if .Values.affine.persistence.enabled }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ .Values.affine.volumes.persistentVolumeClaim.claimName }}
+spec:
+  accessModes:
+    - {{ .Values.affine.persistence.uploadLocation.accessMode }}
+  resources:
+    requests:
+      storage: {{ .Values.affine.persistence.uploadLocation.size }}
+  {{- if .Values.affine.persistence.uploadLocation.storageClass }}
+  storageClassName: {{ .Values.affine.persistence.uploadLocation.storageClass }}
+  {{- end }}
+{{- end }}
