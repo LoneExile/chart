@@ -24,12 +24,12 @@ spec:
             - name: DATABASE_URL
               value: {{ .Values.affine.env.DATABASE_URL }}
           volumeMounts:
-            - name: upload-storage
+            - name: affine-storage
               mountPath: {{ .Values.affine.storage.uploadLocation }}
               {{- if .Values.affine.storage.uploadSubPath }}
               subPath: {{ .Values.affine.storage.uploadSubPath }}
               {{- end }}
-            - name: config-storage
+            - name: affine-storage
               mountPath: {{ .Values.affine.storage.configLocation }}
               {{- if .Values.affine.storage.configSubPath }}
               subPath: {{ .Values.affine.storage.configSubPath }}
@@ -48,12 +48,12 @@ spec:
             - name: DATABASE_URL
               value: {{ .Values.affine.env.DATABASE_URL }}
           volumeMounts:
-            - name: upload-storage
+            - name: affine-storage
               mountPath: {{ .Values.affine.storage.uploadLocation }}
               {{- if .Values.affine.storage.uploadSubPath }}
               subPath: {{ .Values.affine.storage.uploadSubPath }}
               {{- end }}
-            - name: config-storage
+            - name: affine-storage
               mountPath: {{ .Values.affine.storage.configLocation }}
               {{- if .Values.affine.storage.configSubPath }}
               subPath: {{ .Values.affine.storage.configSubPath }}
@@ -63,6 +63,6 @@ spec:
             {{- toYaml .Values.affine.resources | nindent 12 }}
           {{- end }}
       volumes:
-        - name: upload-storage
+        - name: affine-storage
           persistentVolumeClaim:
             claimName: {{ .Values.affine.volumes.persistentVolumeClaim.claimName }}
