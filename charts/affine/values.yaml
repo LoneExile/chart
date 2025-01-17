@@ -17,6 +17,10 @@ affine:
       value: "" # {{ Release.Name }}-redis
     - name: DATABASE_URL
       value: "" # "postgresql://username:password@{{ .Release.Name }}-postgresql-service:5432/affine"
+    # - name: AFFINE_SERVER_HOST
+    #   value: "affine"
+    # - name: AFFINE_SERVER_HTTPS
+    #   value: "true"
 
   service:
     type: ClusterIP
