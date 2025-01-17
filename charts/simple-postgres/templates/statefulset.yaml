@@ -33,6 +33,11 @@ spec:
             secretKeyRef:
               name: {{ .Release.Name }}-postgres-secret
               key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-postgres-secret
+              key: POSTGRES_DB
         - name: PGDATA
           value: {{ .Values.persistence.pgdata }}
         ports:
