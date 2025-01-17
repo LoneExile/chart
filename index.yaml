@@ -3,6 +3,28 @@ entries:
   affine:
   - apiVersion: v2
     appVersion: stable-c5da8dd
+    created: "2025-01-17T08:14:16.679164915Z"
+    dependencies:
+    - condition: simple-redis.enabled
+      name: simple-redis
+      repository: https://loneexile.github.io/chart
+      version: 0.1.1
+    - condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for AFFiNE
+    digest: 8f4e76a8f4e689ece41f6e15176baf177d4c7c4c7f4e52233caf80547d47b454
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: affine
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/affine-0.1.4/affine-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: stable-c5da8dd
     created: "2025-01-17T08:07:43.717758147Z"
     dependencies:
     - condition: simple-redis.enabled
@@ -1034,4 +1056,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T08:07:47.027160752Z"
+generated: "2025-01-17T08:14:19.701758407Z"
