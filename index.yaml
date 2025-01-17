@@ -804,6 +804,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/simple-postgres-0.1.0/simple-postgres-0.1.0.tgz
     version: 0.1.0
+  simple-redis:
+  - apiVersion: v2
+    appVersion: 7.4.2
+    created: "2025-01-17T04:42:17.473946183Z"
+    description: A Helm chart for Redis
+    digest: 0675e529ae2230f0f154702664f5d471027daa1b4290b6da2b95789b6bfe1a4d
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: simple-redis
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/simple-redis-0.1.1/simple-redis-0.1.1.tgz
+    version: 0.1.1
   sonarqube:
   - apiVersion: v2
     appVersion: 10.7.0
@@ -917,4 +931,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T03:52:18.109265847Z"
+generated: "2025-01-17T04:42:18.372495097Z"
