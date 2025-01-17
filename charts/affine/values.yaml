@@ -11,9 +11,12 @@ affine:
     uploadSubPath: "" # config/affine/storage
     configSubPath: "" # config/affine/config
 
+  ## https://docs.affine.pro/docs/self-host-affine/run-affine-with-custom-options
   env:
-    REDIS_SERVER_HOST: "" # {{ Release.Name }}-redis
-    DATABASE_URL: "" # "postgresql://username:password@{{ .Release.Name }}-postgresql-service:5432/affine"
+    - name: REDIS_SERVER_HOST
+      value: "" # {{ Release.Name }}-redis
+    - name: DATABASE_URL
+      value: "" # "postgresql://username:password@{{ .Release.Name }}-postgresql-service:5432/affine"
 
   service:
     type: ClusterIP
