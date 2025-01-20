@@ -215,6 +215,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/buildkitd-0.1.0/buildkitd-0.1.0.tgz
     version: 0.1.0
+  cloudbeaver:
+  - apiVersion: v2
+    appVersion: 24.3.2
+    created: "2025-01-20T09:43:16.657466017Z"
+    description: A Helm chart for CloudBeaver
+    digest: d84e299c65376e9262e9d9df2bbbe0a474f353624815614c1cfdc2271a08a1b4
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: cloudbeaver
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/cloudbeaver-0.1.0/cloudbeaver-0.1.0.tgz
+    version: 0.1.0
   cloudflared:
   - apiVersion: v2
     created: "2024-12-12T08:11:44.21160227Z"
@@ -1092,4 +1106,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-17T09:51:47.300089091Z"
+generated: "2025-01-20T09:43:19.641295195Z"
