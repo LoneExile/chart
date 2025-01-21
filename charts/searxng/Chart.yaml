@@ -1,0 +1,5 @@
+apiVersion: v2
+name: searxng
+description: A Helm chart for SearXNG search engine
+version: 0.1.0
+appVersion: "2025.1.20-8731e3779"
