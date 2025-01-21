@@ -1,0 +1,29 @@
+replicaCount: 1
+
+image:
+  repository: dullage/flatnotes
+  tag: latest
+  pullPolicy: IfNotPresent
+
+env:
+  PUID: 1000
+  PGID: 1000
+  FLATNOTES_AUTH_TYPE: "totp"
+  
+secret:
+  FLATNOTES_USERNAME: "user"
+  FLATNOTES_PASSWORD: "changeMe!"
+  FLATNOTES_SECRET_KEY: "aLongRandomSeriesOfCharacters"
+  FLATNOTES_TOTP_KEY: "aLongRandomSeriesOfCharacters"
+
+service:
+  type: ClusterIP
+  port: 8080
+
+persistence:
+  enabled: false
+  storageClass: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  subPath: ""
+  existingClaim: ""
