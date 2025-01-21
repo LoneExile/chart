@@ -332,6 +332,19 @@ entries:
   flatnotes:
   - apiVersion: v2
     appVersion: v5
+    created: "2025-01-21T18:54:01.426725499Z"
+    description: A Helm chart for Flatnotes
+    digest: 236aaf6e8f7a276d3431eb97f347dded04bb928016730daae360198a8cc0024b
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: flatnotes
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/flatnotes-0.1.3/flatnotes-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: v5
     created: "2025-01-21T09:56:05.414287517Z"
     description: A Helm chart for Flatnotes
     digest: 776eb6a1785c9ee27190d4328fd614e48730efa33e4fdf4f91d40c282f2c7945
@@ -1202,4 +1215,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-21T09:56:08.176187403Z"
+generated: "2025-01-21T18:54:04.20352088Z"
