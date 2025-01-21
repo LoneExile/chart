@@ -19,6 +19,7 @@ secret:
 service:
   type: ClusterIP
   port: 8080
+  targetPort: 8080
 
 persistence:
   enabled: false
