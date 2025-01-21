@@ -300,6 +300,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/drawdb-0.1.0/drawdb-0.1.0.tgz
     version: 0.1.0
+  excalidraw:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-01-21T08:51:14.007570291Z"
+    description: Helm chart for Excalidraw
+    digest: 356410b2e4fc10ee847be5a46b7b83bf08ec912c7454f5861801e618ac71fc27
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: excalidraw
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/excalidraw-0.1.0/excalidraw-0.1.0.tgz
+    version: 0.1.0
   filebrowser:
   - apiVersion: v2
     appVersion: s6
@@ -1148,4 +1162,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-21T03:22:39.753541855Z"
+generated: "2025-01-21T08:51:16.96799079Z"
