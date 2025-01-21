@@ -329,6 +329,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/filebrowser-0.1.0/filebrowser-0.1.0.tgz
     version: 0.1.0
+  flatnotes:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-01-21T09:43:47.906044868Z"
+    description: A Helm chart for Flatnotes
+    digest: a55fb7372a192d947f859679c7cc230e8dfd21697034b787e28a1fc4a9e1710c
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: flatnotes
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/flatnotes-0.1.0/flatnotes-0.1.0.tgz
+    version: 0.1.0
   hoarder:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -1162,4 +1176,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-21T08:51:16.96799079Z"
+generated: "2025-01-21T09:43:50.590948627Z"
