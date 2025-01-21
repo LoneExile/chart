@@ -657,6 +657,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/pdf-service-0.1.0/pdf-service-0.1.0.tgz
     version: 0.1.0
+  perplexica:
+  - apiVersion: v2
+    appVersion: 1.0.0
+    created: "2025-01-21T03:22:38.313422936Z"
+    description: Perplexica Helm Chart
+    digest: b7d50a6613ea627a8fbfd3326215f352c6be33c1f2f0fc07537b056303ffa20a
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: perplexica
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/perplexica-0.1.0/perplexica-0.1.0.tgz
+    version: 0.1.0
   prometheus-stack:
   - apiVersion: v2
     created: "2025-01-14T11:01:14.51929083Z"
@@ -894,6 +908,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/remark42-0.1.0/remark42-0.1.0.tgz
     version: 0.1.0
+  searxng:
+  - apiVersion: v2
+    appVersion: 2025.1.20-8731e3779
+    created: "2025-01-21T03:22:38.990325436Z"
+    description: A Helm chart for SearXNG search engine
+    digest: 076b6193a2c0fe2cd0e6f24d97e77da9ac25004724e3f63628c822d8619be06c
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: searxng
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/searxng-0.1.0/searxng-0.1.0.tgz
+    version: 0.1.0
   simple-postgres:
   - apiVersion: v2
     appVersion: "16.6"
@@ -1120,4 +1148,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-20T11:01:27.462912716Z"
+generated: "2025-01-21T03:22:39.753541855Z"
