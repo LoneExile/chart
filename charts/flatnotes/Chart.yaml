@@ -1,5 +1,5 @@
 apiVersion: v2
 name: flatnotes
 description: A Helm chart for Flatnotes
-version: 0.1.0
-appVersion: "latest"
+version: 0.1.1
+appVersion: "v5"

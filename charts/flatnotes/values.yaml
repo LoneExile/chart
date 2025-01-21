@@ -2,7 +2,7 @@ replicaCount: 1
 
 image:
   repository: dullage/flatnotes
-  tag: latest
+  tag: "v5"
   pullPolicy: IfNotPresent
 
 env:
