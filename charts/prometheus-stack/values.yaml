@@ -1,6 +1,7 @@
 kube-prometheus-stack:
   prometheus:
     prometheusSpec:
+      retention: 100d
       storageSpec:
         volumeClaimTemplate:
           spec:

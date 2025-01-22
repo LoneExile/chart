@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "sonarr.fullname" . }}
+  labels:
+    {{- include "sonarr.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "sonarr.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "sonarr.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          securityContext:
+            runAsUser: {{ .Values.securityContext.runAsUser }}
+            runAsGroup: {{ .Values.securityContext.runAsGroup }}
+          ports:
+            - name: sonarr
+              containerPort: 8989
+              protocol: TCP
+          volumeMounts:
+            - name: sonarr-volume
+              mountPath: /config
+              {{- with .Values.persistence.config }}
+              subPath: {{ .subPath }}
+              {{- end }}
+            - name: sonarr-volume
+              mountPath: /tv
+              {{- with .Values.persistence.tv }}
+              subPath: {{ .subPath }}
+              {{- end }}
+            - name: sonarr-volume
+              mountPath: /downloads
+              {{- with .Values.persistence.downloads }}
+              subPath: {{ .subPath }}
+              {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: sonarr-volume
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.claimName }}

@@ -1,0 +1,42 @@
+replicaCount: 1
+
+image:
+  repository: hotio/radarr
+  tag: "release-5.17.2.9580"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 7878
+
+persistence:
+  enabled: true
+  # storageClassName: ""
+  # accessMode: ReadWriteMany
+  # size: 10Gi
+  existingClaim: your-claim-name
+
+env:
+  TZ: "Etc/UTC"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "002"
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+
+volumeMounts:
+  config:
+    mountPath: /config
+    subPath: config/radarr/config
+  movies:
+    mountPath: /movie
+    subPath: home/radarr/movie
+  downloads:
+    mountPath: /downloads
+    subPath: home/radarr/downloads

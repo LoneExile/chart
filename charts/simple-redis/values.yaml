@@ -1,0 +1,20 @@
+replicaCount: 1
+
+image:
+  repository: redis
+  tag: 7.4.2
+  pullPolicy: IfNotPresent
+
+service:
+  port: 6379
+  targetPort: 6379
+
+persistence:
+  enabled: true
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /data
+  emptyDir: true
+  subPath: ""
+  volumeClaimName: your-claim-name

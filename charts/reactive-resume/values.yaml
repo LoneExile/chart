@@ -9,7 +9,7 @@ app:
   image:
     repository: amruthpillai/reactive-resume
     pullPolicy: IfNotPresent
-    tag: "latest"
+    tag: "v4.3.7"
   service:
     type: ClusterIP
     port: 3000
@@ -49,6 +49,7 @@ chrome:
     preRequestHealthCheck: true
 #####################################################
 minio:
+  enabled: true
   global:
     defaultStorageClass: "nfs-client"
   auth:
@@ -57,6 +58,7 @@ minio:
   defaultBuckets: "default"
 #####################################################
 postgresql:
+  enabled: true
   global:
     defaultStorageClass: "nfs-client"
     security:

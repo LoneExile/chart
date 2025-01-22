@@ -1,0 +1,14 @@
+apiVersion: v2
+name: immich
+description: Immich Helm Chart
+version: 0.1.2
+appVersion: "v1.119.0"
+dependencies:
+  - name: redis
+    condition: redis.enabled
+    version: 20.6.3
+    repository: https://charts.bitnami.com/bitnami
+  - name: simple-postgres
+    condition: simple-postgres.enabled
+    version: 0.1.5
+    repository: https://loneexile.github.io/chart

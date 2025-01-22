@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-redis
+  labels:
+    app: redis
+    chart: {{ .Chart.Name }}-{{ .Chart.Version }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: redis
+      release: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: redis
+        release: {{ .Release.Name }}
+    spec:
+      containers:
+      - name: redis
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+        volumeMounts:
+        - name: redis-data
+          mountPath: {{ .Values.persistence.mountPath }}
+          {{- if .Values.persistence.subPath }}
+          subPath: {{ .Values.persistence.subPath }}
+          {{- end }}
+      volumes:
+      - name: redis-data
+      {{- if .Values.persistence.emptyDir }}
+        emptyDir: {}
+      {{- else }}
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.volumeClaimName }}
+      {{- end }}

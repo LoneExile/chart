@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-chrome
+spec:
+  ports:
+  - port: {{ .Values.chrome.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.chrome.service.port }}
+  selector:
+    app: chrome
+  type: ClusterIP

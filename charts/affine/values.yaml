@@ -1,0 +1,78 @@
+affine:
+  replicaCount: 1
+  image:
+    repository: ghcr.io/toeverything/affine-graphql
+    tag: "stable-c5da8dd"
+    pullPolicy: IfNotPresent
+
+  storage:
+    uploadLocation: /root/.affine/storage
+    configLocation: /root/.affine/config
+    uploadSubPath: "" # config/affine/storage
+    configSubPath: "" # config/affine/config
+
+  ## https://docs.affine.pro/docs/self-host-affine/run-affine-with-custom-options
+  env:
+    - name: REDIS_SERVER_HOST
+      value: "" # {{ Release.Name }}-redis
+    - name: DATABASE_URL
+      value: "" # "postgresql://username:password@{{ .Release.Name }}-postgresql-service:5432/affine"
+    # - name: AFFINE_SERVER_HOST
+    #   value: "affine"
+    # - name: AFFINE_SERVER_HTTPS
+    #   value: "true"
+
+  service:
+    type: ClusterIP
+    port: 3010
+
+  persistence:
+    enabled: false
+    uploadLocation:
+      storageClass: ""
+      accessMode: ReadWriteOnce
+      size: 10Gi
+  volumes:
+      name: upload-storage
+      persistentVolumeClaim:
+        claimName: ""
+
+  resources: {}
+    # requests:
+    #   cpu: 100m
+    #   memory: 256Mi
+    # limits:
+    #   cpu: 500m
+    #   memory: 512Mi
+
+  secrets:
+    databaseUrl: 
+      existingSecret: ""
+      key: DATABASE_URL
+    
+    redisHost:
+      existingSecret: ""
+      key: REDIS_HOST
+
+redis:
+  enabled: true
+
+simple-postgres:
+  enabled: true
+  postgresql:
+    image:
+      repository: postgres
+      tag: 16.6
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: "postgresql"
+      password: "postgresql"
+      database: "affine"
+
+  persistence:
+    pgdata: "/var/lib/postgresql/data/"
+    claimName: your-claim-name
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        subPath: config/affine/db/data

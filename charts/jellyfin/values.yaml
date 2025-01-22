@@ -5,6 +5,9 @@ image:
   tag: "10.10.3"
   pullPolicy: IfNotPresent
 
+nodeSelector: {}
+  # kubernetes.io/hostname: your-node-name
+
 service:
   port: 8096
   targetPort: 8096

@@ -1,0 +1,17 @@
+version: '3'
+services:
+  tailscaled:
+    image: tailscale/tailscale
+    container_name: tailscaled
+    volumes:
+      - /var/lib:/var/lib
+      - /dev/net/tun:/dev/net/tun
+    network_mode: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    environment:
+      - TS_AUTHKEY=
+      - TS_EXTRA_ARGS=--advertise-exit-node
+      - TS_ROUTES=192.168.1.0/24
+    restart: unless-stopped

@@ -1,0 +1,37 @@
+postgresql:
+  replicaCount: 1
+  image:
+    repository: postgres
+    tag: 16.6
+    pullPolicy: IfNotPresent
+  
+  command: []
+  
+  service:
+    port: 5432
+    targetPort: 5432
+  
+  credentials:
+    username: "admin"
+    password: "admin"
+    database: "postgres"
+  
+  resources: {}
+    # limits:
+    #   cpu: "1"
+    #   memory: 1Gi
+    # requests:
+    #   cpu: 100m
+    #   memory: 25Mi
+
+persistence:
+  pgdata: "/var/lib/postgresql/data/"
+  claimName: your-claim-name
+  mountPaths:
+    - path: /var/lib/postgresql/data
+      subPath: config/somename/db/data
+
+initdb:
+  scripts: []
+    # create-extensions.sql: |
+    #   CREATE EXTENSION vectors;

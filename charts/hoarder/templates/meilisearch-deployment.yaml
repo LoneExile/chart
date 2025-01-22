@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-meilisearch
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: meilisearch
+  template:
+    metadata:
+      labels:
+        app: meilisearch
+    spec:
+      containers:
+      - name: meilisearch
+        image: {{ .Values.meilisearch.image.repository }}:{{ .Values.meilisearch.image.tag }}
+        env:
+        - name: MEILI_NO_ANALYTICS
+          value: "true"
+        envFrom:
+        - configMapRef:
+            name: {{ .Release.Name }}-env
+        volumeMounts:
+        - mountPath: /meili_data
+          name: meilisearch
+          subPath: {{ .Values.meilisearch.persistence.subPath }}
+      volumes:
+      - name: meilisearch
+        persistentVolumeClaim:
+          claimName: {{ .Values.meilisearch.persistence.claimName }}

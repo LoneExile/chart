@@ -1,0 +1,36 @@
+nameOverride: ""
+fullnameOverride: ""
+
+replicaCount: 1
+
+image:
+  repository: dbeaver/cloudbeaver
+  tag: "24.3.2"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8978
+  targetPort: 8978
+  nodePort: 30080  # Optional, if you want NodePort
+
+persistence:
+  enabled: false
+  storageClassName: ""
+  accessMode: ReadWriteOnce
+  size: 1Gi
+  mountPath: /opt/cloudbeaver/workspace
+  subPath: "" # "config/cloudbeaver/workspace"
+  claimName: ""
+
+resources: {}
+  # limits:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 200m
+  #   memory: 256Mi
+
+nodeSelector: {}
+tolerations: []
+affinity: {}

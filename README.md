@@ -2,6 +2,9 @@
 
 Self-hosted helm chart
 
+> [!CAUTION]
+> This is a work in progress. only use it if you know what you are doing.
+
 ## Prerequisites
 
 - [helm](https://helm.sh/docs/intro/install/)
@@ -35,9 +38,13 @@ helm repo remove le
 ## TODO
 
 - [ ] add more charts
+- [ ] library_charts
+  - https://helm.sh/docs/topics/library_charts/
+  - https://github.com/bjw-s/helm-charts/tree/main/charts/library/common
 - [ ] handle secrets
   - [external-secrets](https://github.com/external-secrets/external-secrets)
   - [helm-secrets](https://github.com/jkroepke/helm-secrets)
+  - https://github.com/hashicorp/vault
 
 #### resources
 

@@ -37,7 +37,7 @@ spec:
             - name: CHROME_TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: chrome-token
             - name: CHROME_URL
               value: "ws://{{ include "reactive-resume.fullname" . }}-chrome:3000"
@@ -46,19 +46,19 @@ spec:
             - name: DATABASE_URL
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: database-url
 
             # Auth configuration
             - name: ACCESS_TOKEN_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: access-token-secret
             - name: REFRESH_TOKEN_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: refresh-token-secret
 
             # Email configuration
@@ -71,8 +71,7 @@ spec:
 
             # MinIO configuration
             - name: STORAGE_ENDPOINT
-              value: {{ printf "%s-minio" .Release.Name }}
-              # value: {{ .Values.minio.host }}
+              value: {{ .Values.minio.host | default (printf "%s-minio" .Release.Name) }}
             - name: STORAGE_PORT
               value: {{ .Values.minio.port | default 9000 | quote }}
             - name: STORAGE_REGION
@@ -82,12 +81,12 @@ spec:
             - name: STORAGE_ACCESS_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: storage-access-key
             - name: STORAGE_SECRET_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: storage-secret-key
             - name: STORAGE_USE_SSL
               value: {{ .Values.minio.useSsl | default false | quote }}
@@ -128,7 +127,7 @@ spec:
             - name: TOKEN
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "reactive-resume.fullname" . }}
+                  name: {{ include "reactive-resume.fullname" . | lower }}
                   key: chrome-token
           resources:
             {{- toYaml .Values.chrome.resources | nindent 12 }}

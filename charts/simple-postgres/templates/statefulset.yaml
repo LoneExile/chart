@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-postgresql
+  labels:
+    {{- include "postgresql.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.postgresql.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-postgresql
+  serviceName: {{ .Release.Name }}-postgresql
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-postgresql
+    spec:
+      containers:
+      - name: postgresql
+        image: "{{ .Values.postgresql.image.repository }}:{{ .Values.postgresql.image.tag }}"
+        imagePullPolicy: {{ .Values.postgresql.image.pullPolicy }}
+        {{- if .Values.postgresql.command }}
+        command: {{ .Values.postgresql.command | toJson }}
+        {{- end }}
+        env:
+        - name: POSTGRES_USER
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-postgres-secret
+              key: POSTGRES_USER
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-postgres-secret
+              key: POSTGRES_PASSWORD
+        - name: POSTGRES_DB
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-postgres-secret
+              key: POSTGRES_DB
+        - name: PGDATA
+          value: {{ .Values.persistence.pgdata }}
+        ports:
+        - name: postgresql
+          containerPort: {{ .Values.postgresql.service.targetPort }}
+        {{- if .Values.postgresql.resources }}
+        resources:
+          {{- toYaml .Values.postgresql.resources | nindent 12 }}
+        {{- end }}
+        volumeMounts:
+          {{- range .Values.persistence.mountPaths }}
+          - mountPath: {{ .path }}
+            name: postgres-storage
+            {{- if .subPath }}
+            subPath: {{ .subPath }}
+            {{- end }}
+          {{- end }}
+          {{- if .Values.initdb.scripts }}
+          - name: init-scripts
+            mountPath: /docker-entrypoint-initdb.d
+          {{- end }}
+      volumes:
+      - name: postgres-storage
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.claimName }}
+      {{- if .Values.initdb.scripts }}
+      - name: init-scripts
+        configMap:
+          name: {{ .Release.Name }}-init-scripts
+      {{- end }}

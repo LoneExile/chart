@@ -1,0 +1,28 @@
+replicaCount: 1
+
+image:
+  repository: excalidraw/excalidraw
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+  nodePort: 30300
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 256Mi
+  # requests:
+  #   cpu: 50m
+  #   memory: 128Mi
+
+podAnnotations: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "affine.fullname" . }}
+  labels:
+    {{- include "affine.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.affine.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "affine.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "affine.selectorLabels" . | nindent 8 }}
+    spec:
+      initContainers:
+        - name: {{ .Chart.Name }}-migration
+          image: "{{ .Values.affine.image.repository }}:{{ .Values.affine.image.tag }}"
+          command: ['sh', '-c', 'node ./scripts/self-host-predeploy.js']
+          env:
+            {{- range .Values.affine.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: affine-storage
+              mountPath: {{ .Values.affine.storage.uploadLocation }}
+              {{- if .Values.affine.storage.uploadSubPath }}
+              subPath: {{ .Values.affine.storage.uploadSubPath }}
+              {{- end }}
+            - name: affine-storage
+              mountPath: {{ .Values.affine.storage.configLocation }}
+              {{- if .Values.affine.storage.configSubPath }}
+              subPath: {{ .Values.affine.storage.configSubPath }}
+              {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.affine.image.repository }}:{{ .Values.affine.image.tag }}"
+          imagePullPolicy: {{ .Values.affine.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3010
+              protocol: TCP
+          env:
+            {{- range .Values.affine.env }}
+            - name: {{ .name }}
+              value: {{ .value | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: affine-storage
+              mountPath: {{ .Values.affine.storage.uploadLocation }}
+              {{- if .Values.affine.storage.uploadSubPath }}
+              subPath: {{ .Values.affine.storage.uploadSubPath }}
+              {{- end }}
+            - name: affine-storage
+              mountPath: {{ .Values.affine.storage.configLocation }}
+              {{- if .Values.affine.storage.configSubPath }}
+              subPath: {{ .Values.affine.storage.configSubPath }}
+              {{- end }}
+          {{ if .Values.affine.resources }}
+          resources:
+            {{- toYaml .Values.affine.resources | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: affine-storage
+          persistentVolumeClaim:
+            claimName: {{ .Values.affine.volumes.persistentVolumeClaim.claimName }}

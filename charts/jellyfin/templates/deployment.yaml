@@ -17,6 +17,10 @@ spec:
       securityContext:
         runAsUser: {{ .Values.securityContext.runAsUser }}
         runAsGroup: {{ .Values.securityContext.runAsGroup }}
+        {{- if .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml .Values.nodeSelector | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ include "jellyfin.name" . }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"

@@ -1,0 +1,14 @@
+apiVersion: v2
+name: affine
+description: A Helm chart for AFFiNE
+version: 0.1.5
+appVersion: "stable-c5da8dd"
+dependencies:
+  - name: simple-redis
+    condition: simple-redis.enabled
+    version: 0.1.1
+    repository: https://loneexile.github.io/chart
+  - name: simple-postgres
+    condition: simple-postgres.enabled
+    version: 0.1.6
+    repository: https://loneexile.github.io/chart

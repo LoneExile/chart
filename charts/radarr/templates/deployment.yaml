@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "radarr.fullname" . }}
+  labels:
+    {{- include "radarr.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "radarr.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "radarr.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 7878
+              protocol: TCP
+          env:
+            - name: TZ
+              value: {{ .Values.env.TZ }}
+            - name: PUID
+              value: {{ .Values.env.PUID | quote }}
+            - name: PGID
+              value: {{ .Values.env.PGID | quote }}
+            - name: UMASK
+              value: {{ .Values.env.UMASK | quote }}
+          volumeMounts:
+            - name: config
+              mountPath: {{ .Values.volumeMounts.config.mountPath }}
+              subPath: {{ .Values.volumeMounts.config.subPath }}
+            - name: movies
+              mountPath: {{ .Values.volumeMounts.movies.mountPath }}
+              subPath: {{ .Values.volumeMounts.movies.subPath }}
+            - name: downloads
+              mountPath: {{ .Values.volumeMounts.downloads.mountPath }}
+              subPath: {{ .Values.volumeMounts.downloads.subPath }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+        - name: movies
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+        - name: downloads
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-meilisearch
+spec:
+  ports:
+  - port: {{ .Values.meilisearch.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.meilisearch.service.port }}
+  selector:
+    app: meilisearch
