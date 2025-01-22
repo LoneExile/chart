@@ -874,6 +874,28 @@ entries:
   reactive-resume:
   - apiVersion: v2
     appVersion: 4.3.7
+    created: "2025-01-22T03:13:46.687004472Z"
+    dependencies:
+    - condition: minio.enabled
+      name: minio
+      repository: https://charts.bitnami.com/bitnami
+      version: 14.10.3
+    - condition: postgresql.enabled
+      name: postgresql
+      repository: https://charts.bitnami.com/bitnami
+      version: 16.3.4
+    description: A Helm chart for Reactive-Resume
+    digest: a648610505ce025889aec3397437ffb7ba566742fb5f15a8e38619832b4d065a
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: reactive-resume
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/reactive-resume-0.1.3/reactive-resume-0.1.3.tgz
+    version: 0.1.3
+  - apiVersion: v2
+    appVersion: 4.3.7
     created: "2025-01-13T17:07:34.787823145Z"
     dependencies:
     - name: minio
@@ -1215,4 +1237,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-21T18:54:04.20352088Z"
+generated: "2025-01-22T03:13:47.653831058Z"
