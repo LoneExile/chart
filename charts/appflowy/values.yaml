@@ -193,6 +193,7 @@ ai:
     openaiApiKey: "test"
 #####################################################
 nginx:
+  enabled: false
   image:
     repository: nginx
     tag: latest

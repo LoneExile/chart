@@ -1,3 +1,4 @@
+{{- if .Values.nginx.enabled }}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -32,3 +33,4 @@ spec:
         - name: nginx-config
           configMap:
             name: {{ include "nginx-chart.fullname" . }}-config
+{{- end }}
