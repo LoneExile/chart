@@ -49,6 +49,7 @@ chrome:
     preRequestHealthCheck: true
 #####################################################
 minio:
+  enabled: true
   global:
     defaultStorageClass: "nfs-client"
   auth:
@@ -57,6 +58,7 @@ minio:
   defaultBuckets: "default"
 #####################################################
 postgresql:
+  enabled: true
   global:
     defaultStorageClass: "nfs-client"
     security:
