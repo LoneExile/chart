@@ -1,0 +1,52 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/paperless-ngx/paperless-ngx
+  tag: "2.14.5"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8000
+
+persistence:
+  enabled: false
+  existingClaim: "your-existing-claim"
+  data:
+    subPath: "config/paperless/data"
+  media:
+    subPath: "config/paperless/media"
+  export:
+    subPath: "config/paperless/export"
+  consume:
+    subPath: "config/paperless/consume"
+
+config:
+  timezone: Asia/Bangkok
+  ocrLanguage: eng
+  additionalOcrLanguages: []
+  url: ""
+  secretKey: ""
+
+redis:
+  enabled: true
+
+postgres:
+  enabled: true
+  postgresql:
+    image:
+      repository: postgres
+      tag: 16.6
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: "paperless"
+      password: "paperless"
+      database: "paperless"
+
+  persistence:
+    pgdata: "/var/lib/postgresql/data/"
+    claimName: your-claim-name
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        subPath: config/paperless/db/data

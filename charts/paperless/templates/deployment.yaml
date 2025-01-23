@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "paperless.fullname" . }}
+  labels:
+    {{- include "paperless.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "paperless.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "paperless.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: PAPERLESS_TIME_ZONE
+              value: {{ .Values.config.timezone }}
+            - name: PAPERLESS_OCR_LANGUAGE
+              value: {{ .Values.config.ocrLanguage }}
+            - name: PAPERLESS_URL
+              value: {{ .Values.config.url }}
+            - name: PAPERLESS_SECRET_KEY
+              value: {{ .Values.config.secretKey }}
+            - name: PAPERLESS_REDIS
+              value: "redis://{{ .Release.Name }}-redis:6379"
+            - name: PAPERLESS_DBHOST
+              value: "{{ .Release.Name }}-postgresql-service"
+            - name: POSTGRES_DB
+              value: "{{ .Values.postgres.postgresql.credentials.database }}"
+            - name: POSTGRES_USER
+              value: "{{ .Values.postgres.postgresql.credentials.username }}"
+            - name: POSTGRES_PASSWORD
+              value: "{{ .Values.postgres.postgresql.credentials.password }}"
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/paperless/data
+              {{- if .Values.persistence.data.subPath }}
+              subPath: {{ .Values.persistence.data.subPath }}
+              {{- end }}
+            - name: data
+              mountPath: /usr/src/paperless/media
+              {{- if .Values.persistence.media.subPath }}
+              subPath: {{ .Values.persistence.media.subPath }}
+              {{- end }}
+            - name: data
+              mountPath: /usr/src/paperless/export
+              {{- if .Values.persistence.export.subPath }}
+              subPath: {{ .Values.persistence.export.subPath }}
+              {{- end }}
+            - name: data
+              mountPath: /usr/src/paperless/consume
+              {{- if .Values.persistence.consume.subPath }}
+              subPath: {{ .Values.persistence.consume.subPath }}
+              {{- end }}
+      volumes:
+        - name: data
+          {{- if .Values.persistence.enabled }}
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.existingClaim }}
+          {{- else }}
+          emptyDir: {}
+          {{- end }}

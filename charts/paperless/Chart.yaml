@@ -1,0 +1,17 @@
+apiVersion: v2
+name: paperless
+description: A Helm chart for Paperless-ngx document management system
+version: 0.1.0
+appVersion: "2.14.5"
+type: application
+dependencies:
+  - name: simple-redis
+    condition: simple-redis.enabled
+    version: 0.1.1
+    repository: https://loneexile.github.io/chart
+    alias: redis
+  - name: simple-postgres
+    condition: simple-postgres.enabled
+    version: 0.1.6
+    repository: https://loneexile.github.io/chart
+    alias: postgres
