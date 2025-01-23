@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: 8000
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
             - name: PAPERLESS_TIME_ZONE
@@ -41,6 +41,8 @@ spec:
               value: "{{ .Values.postgres.postgresql.credentials.username }}"
             - name: POSTGRES_PASSWORD
               value: "{{ .Values.postgres.postgresql.credentials.password }}"
+            - name: PAPERLESS_PORT
+              value: "{{ .Values.service.port }}"
           volumeMounts:
             - name: data
               mountPath: /usr/src/paperless/data
