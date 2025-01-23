@@ -700,6 +700,31 @@ entries:
   paperless:
   - apiVersion: v2
     appVersion: 2.14.5
+    created: "2025-01-23T10:14:23.526423191Z"
+    dependencies:
+    - alias: redis
+      condition: simple-redis.enabled
+      name: simple-redis
+      repository: https://loneexile.github.io/chart
+      version: 0.1.1
+    - alias: postgres
+      condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for Paperless-ngx document management system
+    digest: be624fe90c6daba9a89ccb4c7432ca5f50c27fefb58e83d31bae728e4bb2974a
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: paperless
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/paperless-0.1.2/paperless-0.1.2.tgz
+    version: 0.1.2
+  - apiVersion: v2
+    appVersion: 2.14.5
     created: "2025-01-23T09:54:11.539223589Z"
     dependencies:
     - alias: redis
@@ -1288,4 +1313,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-23T09:54:14.362921986Z"
+generated: "2025-01-23T10:14:25.309764264Z"
