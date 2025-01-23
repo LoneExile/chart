@@ -697,6 +697,32 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/morphos-0.1.0/morphos-0.1.0.tgz
     version: 0.1.0
+  paperless:
+  - apiVersion: v2
+    appVersion: 2.14.5
+    created: "2025-01-23T09:17:53.014566996Z"
+    dependencies:
+    - alias: redis
+      condition: simple-redis.enabled
+      name: simple-redis
+      repository: https://loneexile.github.io/chart
+      version: 0.1.1
+    - alias: postgres
+      condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for Paperless-ngx document management system
+    digest: 4e2f0806d681d64eaddbe3bb3fee0ff0ac88a2131d1b655a7a676cedea661477
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: paperless
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/paperless-0.1.0/paperless-0.1.0.tgz
+    version: 0.1.0
   pdf-service:
   - apiVersion: v2
     appVersion: 0.36.6
@@ -1237,4 +1263,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-22T03:13:47.653831058Z"
+generated: "2025-01-23T09:17:54.552471941Z"
