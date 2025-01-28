@@ -1,0 +1,19 @@
+replicaCount: 1
+
+image:
+  repository: corentinth/it-tools
+  tag: "2024.10.22-7ca5933"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 80
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 50m
+  #   memory: 64Mi
