@@ -463,6 +463,20 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/immich-0.1.0/immich-0.1.0.tgz
     version: 0.1.0
+  it-tools:
+  - apiVersion: v2
+    appVersion: 2024.10.22-7ca5933
+    created: "2025-01-28T03:14:31.264919843Z"
+    description: A Helm chart for IT Tools web application
+    digest: 4f7520a32dbaef7950fe34addb852eccb012230957cc6bde8a36d374865a7091
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: it-tools
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/it-tools-0.1.0/it-tools-0.1.0.tgz
+    version: 0.1.0
   jellyfin:
   - apiVersion: v2
     appVersion: 10.10.3
@@ -1335,4 +1349,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-28T02:18:51.305871922Z"
+generated: "2025-01-28T03:14:33.560182151Z"
