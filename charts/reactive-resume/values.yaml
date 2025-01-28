@@ -9,7 +9,7 @@ app:
   image:
     repository: amruthpillai/reactive-resume
     pullPolicy: IfNotPresent
-    tag: "v4.3.7"
+    tag: "v4.4.2"
   service:
     type: ClusterIP
     port: 3000
