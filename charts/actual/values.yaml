@@ -1,0 +1,29 @@
+
+replicaCount: 1
+
+image:
+  repository: docker.io/actualbudget/actual-server
+  tag: "sha-0312f51-alpine"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5006
+
+persistence:
+  subPath: ""
+  existingClaim: ""
+
+## See all options and more details at https://actualbudget.github.io/docs/Installing/Configuration
+env:
+  # Optional environment variables
+  # ACTUAL_PORT: 5006
+  # ACTUAL_UPLOAD_FILE_SYNC_SIZE_LIMIT_MB: 20
+
+resources: {}
+  # limits:
+  #   cpu: 500m
+  #   memory: 512Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 256Mi

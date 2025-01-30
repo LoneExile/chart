@@ -1,0 +1,5 @@
+apiVersion: v2
+name: actual
+description: A Helm chart for Actual Budget Server
+version: 0.1.0
+appVersion: "sha-0312f51-alpine"
