@@ -1,5 +1,19 @@
 apiVersion: v1
 entries:
+  actual:
+  - apiVersion: v2
+    appVersion: sha-0312f51-alpine
+    created: "2025-01-30T09:48:58.066546879Z"
+    description: A Helm chart for Actual Budget Server
+    digest: 6491652e2a94ef68e1cd6ff6d4ed88941657fb9756cc2a1261363e1ec042bb20
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: actual
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/actual-0.1.0/actual-0.1.0.tgz
+    version: 0.1.0
   affine:
   - apiVersion: v2
     appVersion: stable-c5da8dd
@@ -1349,4 +1363,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-01-28T03:14:33.560182151Z"
+generated: "2025-01-30T09:49:02.086339289Z"
