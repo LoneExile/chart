@@ -10,7 +10,7 @@ persistence:
 jenkins:
   image:
     repository: jenkins/jenkins
-    tag: 2.491-alpine-jdk21
+    tag: 2.495-alpine-jdk21
     pullPolicy: IfNotPresent
 
   resources:
