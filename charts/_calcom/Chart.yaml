@@ -1,0 +1,11 @@
+apiVersion: v2
+name: calcom
+description: A Helm chart for Calcom
+version: 0.1.0
+appVersion: "latest"
+dependencies:
+  - name: simple-postgres
+    condition: simple-postgres.enabled
+    version: 0.1.5
+    repository: https://loneexile.github.io/chart
+    alias: database

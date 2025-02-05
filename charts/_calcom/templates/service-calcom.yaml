@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "calcom.fullname" . }}
+spec:
+  type: {{ .Values.calcom.service.type }}
+  ports:
+  - port: {{ .Values.calcom.service.port }}
+    targetPort: {{ .Values.calcom.service.port }}
+  selector:
+    app: {{ include "calcom.name" . }}

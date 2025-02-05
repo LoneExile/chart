@@ -1,0 +1,34 @@
+{{- if .Values.studio.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "calcom.fullname" . }}-studio
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "calcom.name" . }}-studio
+  template:
+    metadata:
+      labels:
+        app: {{ include "calcom.name" . }}-studio
+    spec:
+      containers:
+      - name: studio
+        image: "{{ .Values.studio.image.repository }}:{{ .Values.studio.image.tag }}"
+        imagePullPolicy: {{ .Values.studio.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.studio.service.port }}
+        command:
+        - npx
+        - prisma
+        - studio
+        envFrom:
+        - secretRef:
+            name: {{ include "calcom.fullname" . }}-env
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://{{ .Values.database.postgresql.credentials.username }}:{{ .Values.database.postgresql.credentials.password }}@{{ .Release.Name }}-simple-postgres/{{ .Values.database.postgresql.database }}"
+        - name: DATABASE_DIRECT_URL
+          value: "postgresql://{{ .Values.database.postgresql.credentials.username }}:{{ .Values.database.postgresql.credentials.password }}@{{ .Release.Name }}-simple-postgres/{{ .Values.database.postgresql.database }}"
+{{- end }}

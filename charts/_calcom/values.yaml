@@ -1,0 +1,51 @@
+# Global configuration
+global:
+  env: production
+
+# Calcom configuration
+calcom:
+  image:
+    repository: calcom.docker.scarf.sh/calcom/cal.com
+    tag: latest
+    pullPolicy: Always
+
+  replicaCount: 1
+
+  # Environment variables
+  env:
+    NEXT_PUBLIC_WEBAPP_URL: ""
+    NEXT_PUBLIC_API_V2_URL: ""
+    NEXT_PUBLIC_LICENSE_CONSENT: ""
+    CALCOM_TELEMETRY_DISABLED: "1"
+    NEXTAUTH_SECRET: "secret"
+    CALENDSO_ENCRYPTION_KEY: "secret"
+
+  # Service configuration
+  service:
+    type: ClusterIP
+    port: 3000
+
+# Prisma Studio configuration
+studio:
+  enabled: false
+  image:
+    repository: calcom.docker.scarf.sh/calcom/cal.com
+    tag: latest
+    pullPolicy: Always
+
+  service:
+    type: ClusterIP
+    port: 5555
+
+database:
+  enabled: true
+  postgresql:
+    image:
+      repository: postgres
+      tag: 16.6
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: "postgres"
+      password: "postgres"
+      database: "calendso"

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "calcom.fullname" . }}
+spec:
+  replicas: {{ .Values.calcom.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "calcom.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "calcom.name" . }}
+    spec:
+      containers:
+      - name: calcom
+        image: "{{ .Values.calcom.image.repository }}:{{ .Values.calcom.image.tag }}"
+        imagePullPolicy: {{ .Values.calcom.image.pullPolicy }}
+        ports:
+        - containerPort: {{ .Values.calcom.service.port }}
+        envFrom:
+        - secretRef:
+            name: {{ include "calcom.fullname" . }}-env
+        env:
+        - name: DATABASE_URL
+          value: "postgresql://{{ .Values.database.postgresql.credentials.username }}:{{ .Values.database.postgresql.credentials.password }}@{{ .Release.Name }}-simple-postgres/{{ .Values.database.postgresql.database }}"
+        - name: DATABASE_DIRECT_URL
+          value: "postgresql://{{ .Values.database.postgresql.credentials.username }}:{{ .Values.database.postgresql.credentials.password }}@{{ .Release.Name }}-simple-postgres/{{ .Values.database.postgresql.database }}"

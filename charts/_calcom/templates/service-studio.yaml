@@ -1,0 +1,13 @@
+{{- if .Values.studio.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "calcom.fullname" . }}-studio
+spec:
+  type: {{ .Values.studio.service.type }}
+  ports:
+  - port: {{ .Values.studio.service.port }}
+    targetPort: {{ .Values.studio.service.port }}
+  selector:
+    app: {{ include "calcom.name" . }}-studio
+{{- end }}
