@@ -229,6 +229,26 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/buildkitd-0.1.0/buildkitd-0.1.0.tgz
     version: 0.1.0
+  calcom:
+  - apiVersion: v2
+    appVersion: latest
+    created: "2025-02-05T17:01:47.047864172Z"
+    dependencies:
+    - alias: database
+      condition: simple-postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.5
+    description: A Helm chart for Calcom
+    digest: dd3851df7945589266cf3b5703e7f58121913bce631eb6255718a430f5ce8a45
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: calcom
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/calcom-0.1.0/calcom-0.1.0.tgz
+    version: 0.1.0
   cloudbeaver:
   - apiVersion: v2
     appVersion: 24.3.2
@@ -1377,4 +1397,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-03T06:43:37.631492813Z"
+generated: "2025-02-05T17:01:50.961653911Z"
