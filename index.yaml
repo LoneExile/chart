@@ -759,6 +759,26 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/morphos-0.1.0/morphos-0.1.0.tgz
     version: 0.1.0
+  nocodb:
+  - apiVersion: v2
+    appVersion: 0.262.0
+    created: "2025-02-24T07:10:07.201841062Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for NocoDB
+    digest: 83e660279f018c509ddd0b4d774efeaebdf716efa239d6e681b7a1842e86ed51
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: nocodb
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/nocodb-0.1.0/nocodb-0.1.0.tgz
+    version: 0.1.0
   paperless:
   - apiVersion: v2
     appVersion: 2.14.5
@@ -1397,4 +1417,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-05T17:01:50.961653911Z"
+generated: "2025-02-24T07:10:10.113418227Z"
