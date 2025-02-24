@@ -1,0 +1,36 @@
+image:
+  repository: nocodb/nocodb
+  tag: "0.262.0"
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+postgres:
+  enabled: true
+  postgresql:
+    image:
+      repository: postgres
+      tag: 16.6
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: "postgres"
+      password: "password"
+      database: "root_db"
+
+  persistence:
+    pgdata: "/var/lib/postgresql/data/"
+    claimName: nfs-client-1
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        subPath: config/nocodb/db/data
+
+persistence:
+  enabled: true
+  size: 1Gi
+  accessMode: ReadWriteOnce
+  storageClassName: ""
+  claimName: nfs-client-1
+  subPath: "config/nocodb/data"

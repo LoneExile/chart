@@ -1,0 +1,12 @@
+apiVersion: v2
+name: nocodb
+description: A Helm chart for NocoDB
+version: 0.1.0
+appVersion: "0.262.0"
+
+dependencies:
+  - name: simple-postgres
+    condition: postgres.enabled
+    version: 0.1.6
+    repository: https://loneexile.github.io/chart
+    alias: postgres
