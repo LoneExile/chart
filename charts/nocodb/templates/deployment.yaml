@@ -20,7 +20,7 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
             - name: NC_DB
-              value: "pg://{{ .Release.Name }}-postgresql:5432?u={{ .Values.postgres.postgresql.credentials.username }}&p={{ .Values.postgres.postgresql.credentials.password }}&d={{ .Values.postgres.postgresql.credentials.database }}"
+              value: "pg://{{ .Release.Name }}-postgresql-service:5432?u={{ .Values.postgres.postgresql.credentials.username }}&p={{ .Values.postgres.postgresql.credentials.password }}&d={{ .Values.postgres.postgresql.credentials.database }}"
           ports:
             - name: http
               containerPort: 8080
