@@ -762,6 +762,25 @@ entries:
   nocodb:
   - apiVersion: v2
     appVersion: 0.262.0
+    created: "2025-02-24T07:19:43.431643379Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for NocoDB
+    digest: 0b2e86ef00d3b8029b19c924b6c6899cb199e792c767c45efb3a1fa4c1fea5e9
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: nocodb
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/nocodb-0.1.1/nocodb-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
+    appVersion: 0.262.0
     created: "2025-02-24T07:10:07.201841062Z"
     dependencies:
     - alias: postgres
@@ -1417,4 +1436,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-24T07:10:10.113418227Z"
+generated: "2025-02-24T07:19:46.383471879Z"
