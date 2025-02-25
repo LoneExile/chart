@@ -1,13 +1,12 @@
 apiVersion: v2
 name: hedgedoc
-description: HedgeDoc collaborative markdown editor
-version: 0.1.0
-appVersion: "1.10.2"
+description: A Helm chart for HedgeDoc
 type: application
-
+version: 0.1.2
+appVersion: "1.10.2"
 dependencies:
   - name: simple-postgres
-    condition: postgres.enabled
     version: 0.1.6
     repository: https://loneexile.github.io/chart
     alias: postgres
+    condition: postgres.enabled

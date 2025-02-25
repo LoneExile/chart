@@ -1,0 +1,6 @@
+dependencies:
+- name: simple-postgres
+  repository: https://loneexile.github.io/chart
+  version: 0.1.6
+digest: sha256:35495ca1776429bd89985b6c5ee0276cbfcc308e26fff3f42665afec0a132e81
+generated: "2025-02-25T14:48:01.634466278+07:00"
