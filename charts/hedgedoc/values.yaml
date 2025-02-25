@@ -28,6 +28,7 @@ postgres:
 hedgedoc:
   domain: localhost
   urlAddPort: true
+  sessionSecret: secret
 
 persistence:
   uploads:

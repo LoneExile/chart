@@ -25,6 +25,8 @@ spec:
               value: {{ .Values.hedgedoc.domain }}
             - name: CMD_URL_ADDPORT
               value: {{ .Values.hedgedoc.urlAddPort | quote }}
+            - name: CMD_SESSION_SECRET 
+              value: {{ .Values.hedgedoc.sessionSecret | quote }}
           ports:
             - name: http
               containerPort: 3000
