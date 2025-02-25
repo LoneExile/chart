@@ -416,6 +416,27 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/flatnotes-0.1.0/flatnotes-0.1.0.tgz
     version: 0.1.0
+  hedgedoc:
+  - apiVersion: v2
+    appVersion: 1.10.2
+    created: "2025-02-25T08:08:03.45610109Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: HedgeDoc collaborative markdown editor
+    digest: 5ceff7b46def3fa5b275a268e349c70b688fc6c41f350c55b5e2ed9e18aff61d
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: hedgedoc
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/hedgedoc-0.1.0/hedgedoc-0.1.0.tgz
+    version: 0.1.0
   hoarder:
   - apiVersion: v2
     appVersion: 1.0.0
@@ -1436,4 +1457,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-24T07:19:46.383471879Z"
+generated: "2025-02-25T08:08:08.920717067Z"
