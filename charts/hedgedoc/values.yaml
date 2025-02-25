@@ -1,0 +1,51 @@
+replicaCount: 1
+
+image:
+  repository: quay.io/hedgedoc/hedgedoc
+  tag: 1.10.2
+  pullPolicy: IfNotPresent
+
+postgres:
+  enabled: true
+  postgresql:
+    image:
+      repository: postgres
+      tag: 16.6
+      pullPolicy: IfNotPresent
+    
+    credentials:
+      username: "hedgedoc"
+      password: "password"
+      database: "hedgedoc"
+
+  persistence:
+    pgdata: "/var/lib/postgresql/data/"
+    claimName: hedgedoc-postgres-data
+    mountPaths:
+      - path: /var/lib/postgresql/data
+        subPath: config/hedgedoc/db/data
+
+hedgedoc:
+  domain: localhost
+  urlAddPort: true
+
+persistence:
+  uploads:
+    enabled: true
+    claimName: hedgedoc-uploads
+    storageClass: ""
+    accessMode: ReadWriteOnce
+    size: 1Gi
+    subPath: config/hedgedoc/uploads
+
+service:
+  type: ClusterIP
+  port: 3000
+
+resources: {}
+  # limits:
+  #   cpu: 100m
+  #   memory: 256Mi
+  # requests:
+  #   cpu: 50m
+  #   memory: 128Mi

@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "hedgedoc.fullname" . }}
+  labels:
+    {{- include "hedgedoc.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "hedgedoc.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "hedgedoc.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env:
+            - name: CMD_DB_URL
+              value: "pg://{{ .Release.Name }}-postgresql-service:5432?u={{ .Values.postgres.postgresql.credentials.username }}&p={{ .Values.postgres.postgresql.credentials.password }}&d={{ .Values.postgres.postgresql.credentials.database }}"
+            - name: CMD_DOMAIN
+              value: {{ .Values.hedgedoc.domain }}
+            - name: CMD_URL_ADDPORT
+              value: {{ .Values.hedgedoc.urlAddPort | quote }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          volumeMounts:
+            - name: uploads
+              mountPath: /hedgedoc/public/uploads
+          {{- if .Values.persistence.uploads.subPath }}
+              subPath: {{ .Values.persistence.uploads.subPath }}
+          {{- end }}
+          {{- with .Values.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: {{ .Values.persistence.uploads.claimName | default (include "hedgedoc.fullname" .) }}
+          # emptyDir: {}
