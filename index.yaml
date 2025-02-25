@@ -419,6 +419,26 @@ entries:
   hedgedoc:
   - apiVersion: v2
     appVersion: 1.10.2
+    created: "2025-02-25T09:20:19.259881005Z"
+    dependencies:
+    - alias: postgres
+      condition: postgres.enabled
+      name: simple-postgres
+      repository: https://loneexile.github.io/chart
+      version: 0.1.6
+    description: A Helm chart for HedgeDoc
+    digest: 4f65543f9521109aaadf6b9ebbf1c3d1c6bca84f9a3fad7a9cad665a58d75e21
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: hedgedoc
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/hedgedoc-0.1.4/hedgedoc-0.1.4.tgz
+    version: 0.1.4
+  - apiVersion: v2
+    appVersion: 1.10.2
     created: "2025-02-25T09:02:24.294213696Z"
     dependencies:
     - alias: postgres
@@ -1517,4 +1537,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-25T09:02:27.751225454Z"
+generated: "2025-02-25T09:20:24.867170295Z"
