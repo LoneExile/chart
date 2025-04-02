@@ -1537,4 +1537,19 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/trilium-0.1.0/trilium-0.1.0.tgz
     version: 0.1.0
-generated: "2025-02-25T09:20:24.867170295Z"
+  uptime-kuma:
+  - apiVersion: v2
+    appVersion: base2-slim
+    created: "2025-04-02T07:12:08.225202225Z"
+    description: A Helm chart for Uptime Kuma monitoring tool
+    digest: 0e60430838bf32f0ffe2f546cae216a12eef0a2a01a3f27308237427a3605cd5
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: uptime-kuma
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/uptime-kuma-0.1.0/uptime-kuma-0.1.0.tgz
+    version: 0.1.0
+generated: "2025-04-02T07:12:08.22533297Z"
