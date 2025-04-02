@@ -1539,6 +1539,20 @@ entries:
     version: 0.1.0
   uptime-kuma:
   - apiVersion: v2
+    appVersion: "1"
+    created: "2025-04-02T07:27:08.022493241Z"
+    description: A Helm chart for Uptime Kuma monitoring tool
+    digest: 06f55db038a4a32107c59694532df8dd8c75d0c98f016a72e4bd207d56d057c1
+    maintainers:
+    - email: Hello@Apinant.dev
+      name: LoneExile
+      url: https://github.com/LoneExile/chart
+    name: uptime-kuma
+    type: application
+    urls:
+    - https://github.com/LoneExile/chart/releases/download/uptime-kuma-0.1.1/uptime-kuma-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: base2-slim
     created: "2025-04-02T07:12:08.225202225Z"
     description: A Helm chart for Uptime Kuma monitoring tool
@@ -1552,4 +1566,4 @@ entries:
     urls:
     - https://github.com/LoneExile/chart/releases/download/uptime-kuma-0.1.0/uptime-kuma-0.1.0.tgz
     version: 0.1.0
-generated: "2025-04-02T07:12:08.22533297Z"
+generated: "2025-04-02T07:27:08.022641368Z"
